@@ -11,6 +11,10 @@
     <!--js and css-->
     <div th:replace="common/cssAndJavascript :: staticResouces"></div>
 </head>
+<!-- BEGIN PAGE LEVEL STYLES -->
+<link rel="stylesheet" type="text/css" href="plugins/table/datatable/datatables.css">
+<link rel="stylesheet" type="text/css" href="plugins/table/datatable/dt-global_style.css">
+<!-- END PAGE LEVEL STYLES -->
 <body>
 <!-- BEGIN LOADER -->
 <div id="load_screen">
@@ -102,90 +106,25 @@
     <div id="content" class="main-content">
         <div class="layout-px-spacing">
 
-            <div class="row layout-top-spacing">
 
-                <!-- 日历图 -->
-                <!-- 日历图 -->
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
-                    <div class="widget widget-chart-one">
-                        <div class="widget-heading">
-                            <h5 class="">本年趋势</h5>
-                            <ul class="tabs tab-pills">
-                                <li><a href="javascript:void(0);" id="tb_1" class="tabmenu">刷新</a></li>
-                            </ul>
-                        </div>
+            <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+                <div class="widget-content widget-content-area br-6">
+                    <div class="table-responsive mb-4 mt-4">
+                        <table id="zero-config" class="table table-hover" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Office</th>
+                                <th>Age</th>
+                                <th>Start date</th>
+                                <th class="no-content"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                        <div class="widget-content">
-                            <div class="tabs tab-content">
-                                <div id="content_1" class="tabcontent">
-                                    <!--日历图-->
-                                    <!--日历图-->
-                                    <!--日历图-->
-                                    <!--日历图-->
-                                    <!--日历图-->
-                                    <!--日历图-->
-                                    <!--日历图-->
-                                    <!--日历图-->
-                                    <div id="calendar_graph" style="width: 1100px;height:220px;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 折线图 -->
-                <!-- 折线图 -->
-                <div class="col-8 layout-spacing">
-                    <div class="widget widget-chart-one">
-                        <div class="widget-heading">
-                            <h5 class="">上周回顾</h5>
-                            <!--<ul class="tabs tab-pills">-->
-                            <!--<li><a href="javascript:void(0);" id="tb_2" class="tabmenu">刷新</a></li>-->
-                            <!--</ul>-->
-                        </div>
-
-                        <div class="widget-content">
-                            <div class="tabs tab-content">
-                                <div id="content_2" class="tabcontent">
-                                    <!--日历图-->
-                                    <!--日历图-->
-                                    <!--日历图-->
-                                    <!--日历图-->
-                                    <!--日历图-->
-                                    <!--日历图-->
-                                    <!--日历图-->
-                                    <!--日历图-->
-                                    <div id="lastWeekAttention" style="width:750px;height:300px;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--  饼图  -->
-                <!--  饼图  -->
-                <div class="col-4 layout-spacing">
-                    <div class="widget widget-chart-one">
-                        <div class="widget-heading">
-                            <h5 class="">上周回顾</h5>
-                            <!--<ul class="tabs tab-pills">-->
-                            <!--<li><a href="javascript:void(0);" id="tb_2" class="tabmenu">刷新</a></li>-->
-                            <!--</ul>-->
-                        </div>
-
-                        <div class="widget-content">
-                            <div class="tabs tab-content">
-                                <div id="content_3" class="tabcontent">
-                                    <!--日历图-->
-                                    <!--日历图-->
-                                    <!--日历图-->
-                                    <!--日历图-->
-                                    <!--日历图-->
-                                    <!--日历图-->
-                                    <!--日历图-->
-                                    <!--日历图-->
-                                    <div id="lastWeekConstitute" style="width:350px;height:300px;"></div>
-                                </div>
-                            </div>
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -214,11 +153,79 @@
 <!--<script src="../assets/js/config.js"></script>-->
 <div th:replace="common/cssAndJavascript :: jsCode"></div>
 
-<script src="../js/drawGraph.js"></script>
-<script type="text/javascript">
-    drawCalendarGraph('calendar_graph')
-    drawLastWeek('lastWeekAttention')
-    drawLastWeekConstitute('lastWeekConstitute')
+<script src="../plugins/table/datatable/datatables.js"></script>
+<script>
+    var data = null
+    $.ajax({
+            type: "GET",
+            url: "testA",
+            async: false,
+            success: function (result) {
+                data = result
+            }
+        }
+    )
+    console.log(data)
+    // $('#zero-config').DataTable({
+    //         data: data,
+    //         //使用对象数组，一定要配置columns，告诉 DataTables 每列对应的属性
+    //         //data 这里是固定不变的，name，position，salary，office 为你数据里对应的属性
+    //         columns: [
+    //             {data: 'one'},
+    //             {data: 'two'},
+    //             {data: 'three'},
+    //             {data: 'four'},
+    //             {data: 'five'}
+    //         ],
+    //         oLanguage: {
+    //             sPrevious: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
+    //             "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>',
+    //             sInfo: "Showing page _PAGE_ of _PAGES_",
+    //             sSearchPlaceholder: "Search...",
+    //             sLengthMenu: "Results :  _MENU_",
+    //         },
+    //         lengthMenu: [7, 10, 20, 50],
+    //     }
+    // )
+    $('#zero-config').DataTable({
+        "oLanguage": {
+            "oPaginate": {
+                "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
+                "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>'
+            },
+            "sInfo": "Showing page _PAGE_ of _PAGES_",
+            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">' +
+                '<circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+            "sSearchPlaceholder": "Search...",
+            "sLengthMenu": "Results :  _MENU_",
+
+        },
+        "stripeClasses": [],
+        "lengthMenu": [7, 10, 20, 50],
+        "pageLength": 7,
+        'data': data,
+        'columns': [
+            {data: 'one'},
+            {data: 'two'},
+            {data: 'three'},
+            {data: 'four'},
+            {data: 'five'},
+            {data: null},
+
+        ],
+        columnDefs: [{
+            //   指定第最后一列
+            targets: 5,
+            render: function (data, type, row, meta) {
+                return '<a type="button" onclick="del(' + row['one'] + ')" >删除</a>';
+            }
+        }]
+    });
+    function del(id) {
+        alert(id)
+        console.log(id);
+    }
 </script>
+
 </body>
 </html>

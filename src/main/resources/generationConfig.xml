@@ -35,11 +35,11 @@
         </javaClientGenerator>
 
         <table tableName="eegFileList"/>
-        <table tableName="friendList"/>
-        <table tableName="learnState"/>
-        <table tableName="userLastWeekState"/>
-        <table tableName="userLogin"/>
-        <table tableName="userMassage"/>
+        <!--<table tableName="friendList"/>-->
+        <!--<table tableName="learnState"/>-->
+        <!--<table tableName="userLastWeekState"/>-->
+        <!--<table tableName="userLogin"/>-->
+        <!--<table tableName="userMassage"/>-->
 
     </context>
 </generatorConfiguration>

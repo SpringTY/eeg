@@ -9,6 +9,7 @@ public class TestController {
     @ResponseBody
     @RequestMapping(value = "getLastWeek")
     public Pair getLastWeek() {
+        System.out.println("TAG: getLastWeek");
         return Pair.getPair(20,20);
     }
 }

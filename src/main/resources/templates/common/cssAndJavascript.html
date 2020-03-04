@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:http="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<!-- th:fragment 定义需要引入的代码块，该div包含的内容即为引用的公共内容 -->
+<div th:fragment="staticResouces">
+    <div>
+        <link href="../assets/css/loader.css" rel="stylesheet" type="text/css"/>
+        <script src="../assets/js/loader.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+        <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../assets/css/plugins.css" rel="stylesheet" type="text/css"/>
+        <link href="../plugins/apex/apexcharts.css" rel="stylesheet" type="text/css">
+        <link href="../assets/css/dashboard/dash_1.css" rel="stylesheet" type="text/css"/>
+        <script src="../plugins/apex/apexcharts.min.js"></script>
+        <script src="../assets/js/libs/jquery-3.1.1.min.js"></script>
+        <script src="../bootstrap/js/popper.min.js"></script>
+        <script src="../bootstrap/js/bootstrap.min.js"></script>
+        <script src="../plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+        <script src="../assets/js/app.js"></script>
+        <script src="../assets/js/custom.js"></script>
+        <script src="../assets/js/dashboard/dash_1.js"></script>
+        <script src='../assets/js/libs/axios.min.js'></script>
+    </div>
+</div>
+<div th:fragment="jsCode">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            App.init();
+        });
+
+    </script>
+
+
+</div>
+</html>

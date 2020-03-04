@@ -5,6 +5,7 @@ document.write('header("Access-Control-Allow-Origin:*");\n' +
 var host = 'localhost'
 var port = '8080'
 var server = host + ':' + port + '/'
+console.log("drawGraph.js TAG");
 
 function getVirtulData(year) {
     year = year || '2020';
