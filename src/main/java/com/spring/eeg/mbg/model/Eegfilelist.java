@@ -1,9 +1,7 @@
 package com.spring.eeg.mbg.model;
 
-import lombok.Data;
-
 import java.util.Date;
-@Data
+
 public class Eegfilelist {
     private Integer fileid;
 
@@ -15,4 +13,63 @@ public class Eegfilelist {
 
     private Integer analysised;
 
+    private Integer totaltime;
+
+    private Integer attentiontime;
+
+    public Integer getFileid() {
+        return fileid;
+    }
+
+    public void setFileid(Integer fileid) {
+        this.fileid = fileid;
+    }
+
+    public Integer getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Integer userid) {
+        this.userid = userid;
+    }
+
+    public String getFilepath() {
+        return filepath;
+    }
+
+    public void setFilepath(String filepath) {
+        this.filepath = filepath == null ? null : filepath.trim();
+    }
+
+    public Date getUploaddate() {
+        return uploaddate;
+    }
+
+    public void setUploaddate(Date uploaddate) {
+        this.uploaddate = uploaddate;
+    }
+
+    public Integer getAnalysised() {
+        return analysised;
+    }
+
+    public void setAnalysised(Integer analysised) {
+        this.analysised = analysised;
+    }
+
+    public Integer getTotaltime() {
+        return totaltime;
+    }
+
+    public void setTotaltime(Integer totaltime) {
+        this.totaltime = totaltime;
+    }
+
+    public Integer getAttentiontime() {
+        return attentiontime;
+    }
+
+    public void setAttentiontime(Integer attentiontime) {
+        this.attentiontime = attentiontime;
+    }
 }

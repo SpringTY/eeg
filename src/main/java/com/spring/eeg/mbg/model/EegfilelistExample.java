@@ -441,6 +441,126 @@ public class EegfilelistExample {
             addCriterion("analysised not between", value1, value2, "analysised");
             return (Criteria) this;
         }
+
+        public Criteria andTotaltimeIsNull() {
+            addCriterion("totalTime is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotaltimeIsNotNull() {
+            addCriterion("totalTime is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotaltimeEqualTo(Integer value) {
+            addCriterion("totalTime =", value, "totaltime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotaltimeNotEqualTo(Integer value) {
+            addCriterion("totalTime <>", value, "totaltime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotaltimeGreaterThan(Integer value) {
+            addCriterion("totalTime >", value, "totaltime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotaltimeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("totalTime >=", value, "totaltime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotaltimeLessThan(Integer value) {
+            addCriterion("totalTime <", value, "totaltime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotaltimeLessThanOrEqualTo(Integer value) {
+            addCriterion("totalTime <=", value, "totaltime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotaltimeIn(List<Integer> values) {
+            addCriterion("totalTime in", values, "totaltime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotaltimeNotIn(List<Integer> values) {
+            addCriterion("totalTime not in", values, "totaltime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotaltimeBetween(Integer value1, Integer value2) {
+            addCriterion("totalTime between", value1, value2, "totaltime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotaltimeNotBetween(Integer value1, Integer value2) {
+            addCriterion("totalTime not between", value1, value2, "totaltime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAttentiontimeIsNull() {
+            addCriterion("attentionTime is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAttentiontimeIsNotNull() {
+            addCriterion("attentionTime is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAttentiontimeEqualTo(Integer value) {
+            addCriterion("attentionTime =", value, "attentiontime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAttentiontimeNotEqualTo(Integer value) {
+            addCriterion("attentionTime <>", value, "attentiontime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAttentiontimeGreaterThan(Integer value) {
+            addCriterion("attentionTime >", value, "attentiontime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAttentiontimeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("attentionTime >=", value, "attentiontime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAttentiontimeLessThan(Integer value) {
+            addCriterion("attentionTime <", value, "attentiontime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAttentiontimeLessThanOrEqualTo(Integer value) {
+            addCriterion("attentionTime <=", value, "attentiontime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAttentiontimeIn(List<Integer> values) {
+            addCriterion("attentionTime in", values, "attentiontime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAttentiontimeNotIn(List<Integer> values) {
+            addCriterion("attentionTime not in", values, "attentiontime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAttentiontimeBetween(Integer value1, Integer value2) {
+            addCriterion("attentionTime between", value1, value2, "attentiontime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAttentiontimeNotBetween(Integer value1, Integer value2) {
+            addCriterion("attentionTime not between", value1, value2, "attentiontime");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

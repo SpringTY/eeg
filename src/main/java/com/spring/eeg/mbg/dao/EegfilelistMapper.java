@@ -3,10 +3,9 @@ package com.spring.eeg.mbg.dao;
 import com.spring.eeg.mbg.model.Eegfilelist;
 import com.spring.eeg.mbg.model.EegfilelistExample;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
-@Repository
+
 public interface EegfilelistMapper {
     long countByExample(EegfilelistExample example);
 
