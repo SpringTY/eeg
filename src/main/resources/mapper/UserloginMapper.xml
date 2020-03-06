@@ -1,110 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.spring.eeg.mbg.dao.UserloginMapper">
-  <resultMap id="BaseResultMap" type="com.spring.eeg.mbg.model.Userlogin">
-    <id column="userId" jdbcType="INTEGER" property="userid" />
-    <result column="userName" jdbcType="VARCHAR" property="username" />
-    <result column="userPassword" jdbcType="VARCHAR" property="userpassword" />
-    <result column="userRole" jdbcType="VARCHAR" property="userrole" />
-    <result column="userAge" jdbcType="INTEGER" property="userage" />
-    <result column="userSex" jdbcType="VARCHAR" property="usersex" />
-    <result column="userAddress" jdbcType="VARCHAR" property="useraddress" />
-    <result column="userEmail" jdbcType="VARCHAR" property="useremail" />
-    <result column="userPhone" jdbcType="VARCHAR" property="userphone" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+    <resultMap id="BaseResultMap" type="com.spring.eeg.mbg.model.Userlogin">
+        <id column="userId" jdbcType="INTEGER" property="userid"/>
+        <result column="userName" jdbcType="VARCHAR" property="username"/>
+        <result column="userPassword" jdbcType="VARCHAR" property="userpassword"/>
+        <result column="userRole" jdbcType="VARCHAR" property="userrole"/>
+        <result column="userAge" jdbcType="INTEGER" property="userage"/>
+        <result column="userSex" jdbcType="VARCHAR" property="usersex"/>
+        <result column="userAddress" jdbcType="VARCHAR" property="useraddress"/>
+        <result column="userEmail" jdbcType="VARCHAR" property="useremail"/>
+        <result column="userPhone" jdbcType="VARCHAR" property="userphone"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
     userId, userName, userPassword, userRole, userAge, userSex, userAddress, userEmail, 
     userPhone
   </sql>
-  <select id="selectByExample" parameterType="com.spring.eeg.mbg.model.UserloginExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from userLogin
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from userLogin
-    where userId = #{userid,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <select id="selectByExample" parameterType="com.spring.eeg.mbg.model.UserloginExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from userLogin
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from userLogin
+        where userId = #{userid,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from userLogin
     where userId = #{userid,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.spring.eeg.mbg.model.UserloginExample">
-    delete from userLogin
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.spring.eeg.mbg.model.Userlogin">
+    <delete id="deleteByExample" parameterType="com.spring.eeg.mbg.model.UserloginExample">
+        delete from userLogin
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="userid" keyColumn="userId" parameterType="com.spring.eeg.mbg.model.Userlogin">
     insert into userLogin (userId, userName, userPassword, 
       userRole, userAge, userSex, 
       userAddress, userEmail, userPhone
@@ -114,154 +116,155 @@
       #{useraddress,jdbcType=VARCHAR}, #{useremail,jdbcType=VARCHAR}, #{userphone,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.spring.eeg.mbg.model.Userlogin">
-    insert into userLogin
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="userid != null">
-        userId,
-      </if>
-      <if test="username != null">
-        userName,
-      </if>
-      <if test="userpassword != null">
-        userPassword,
-      </if>
-      <if test="userrole != null">
-        userRole,
-      </if>
-      <if test="userage != null">
-        userAge,
-      </if>
-      <if test="usersex != null">
-        userSex,
-      </if>
-      <if test="useraddress != null">
-        userAddress,
-      </if>
-      <if test="useremail != null">
-        userEmail,
-      </if>
-      <if test="userphone != null">
-        userPhone,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="userid != null">
-        #{userid,jdbcType=INTEGER},
-      </if>
-      <if test="username != null">
-        #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="userpassword != null">
-        #{userpassword,jdbcType=VARCHAR},
-      </if>
-      <if test="userrole != null">
-        #{userrole,jdbcType=VARCHAR},
-      </if>
-      <if test="userage != null">
-        #{userage,jdbcType=INTEGER},
-      </if>
-      <if test="usersex != null">
-        #{usersex,jdbcType=VARCHAR},
-      </if>
-      <if test="useraddress != null">
-        #{useraddress,jdbcType=VARCHAR},
-      </if>
-      <if test="useremail != null">
-        #{useremail,jdbcType=VARCHAR},
-      </if>
-      <if test="userphone != null">
-        #{userphone,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.spring.eeg.mbg.model.UserloginExample" resultType="java.lang.Long">
-    select count(*) from userLogin
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update userLogin
-    <set>
-      <if test="record.userid != null">
-        userId = #{record.userid,jdbcType=INTEGER},
-      </if>
-      <if test="record.username != null">
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="userid" keyColumn="userId"
+            parameterType="com.spring.eeg.mbg.model.Userlogin">
+        insert into userLogin
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userid != null">
+                userId,
+            </if>
+            <if test="username != null">
+                userName,
+            </if>
+            <if test="userpassword != null">
+                userPassword,
+            </if>
+            <if test="userrole != null">
+                userRole,
+            </if>
+            <if test="userage != null">
+                userAge,
+            </if>
+            <if test="usersex != null">
+                userSex,
+            </if>
+            <if test="useraddress != null">
+                userAddress,
+            </if>
+            <if test="useremail != null">
+                userEmail,
+            </if>
+            <if test="userphone != null">
+                userPhone,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userid != null">
+                #{userid,jdbcType=INTEGER},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="userpassword != null">
+                #{userpassword,jdbcType=VARCHAR},
+            </if>
+            <if test="userrole != null">
+                #{userrole,jdbcType=VARCHAR},
+            </if>
+            <if test="userage != null">
+                #{userage,jdbcType=INTEGER},
+            </if>
+            <if test="usersex != null">
+                #{usersex,jdbcType=VARCHAR},
+            </if>
+            <if test="useraddress != null">
+                #{useraddress,jdbcType=VARCHAR},
+            </if>
+            <if test="useremail != null">
+                #{useremail,jdbcType=VARCHAR},
+            </if>
+            <if test="userphone != null">
+                #{userphone,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.spring.eeg.mbg.model.UserloginExample" resultType="java.lang.Long">
+        select count(*) from userLogin
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update userLogin
+        <set>
+            <if test="record.userid != null">
+                userId = #{record.userid,jdbcType=INTEGER},
+            </if>
+            <if test="record.username != null">
+                userName = #{record.username,jdbcType=VARCHAR},
+            </if>
+            <if test="record.userpassword != null">
+                userPassword = #{record.userpassword,jdbcType=VARCHAR},
+            </if>
+            <if test="record.userrole != null">
+                userRole = #{record.userrole,jdbcType=VARCHAR},
+            </if>
+            <if test="record.userage != null">
+                userAge = #{record.userage,jdbcType=INTEGER},
+            </if>
+            <if test="record.usersex != null">
+                userSex = #{record.usersex,jdbcType=VARCHAR},
+            </if>
+            <if test="record.useraddress != null">
+                userAddress = #{record.useraddress,jdbcType=VARCHAR},
+            </if>
+            <if test="record.useremail != null">
+                userEmail = #{record.useremail,jdbcType=VARCHAR},
+            </if>
+            <if test="record.userphone != null">
+                userPhone = #{record.userphone,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update userLogin
+        set userId = #{record.userid,jdbcType=INTEGER},
         userName = #{record.username,jdbcType=VARCHAR},
-      </if>
-      <if test="record.userpassword != null">
         userPassword = #{record.userpassword,jdbcType=VARCHAR},
-      </if>
-      <if test="record.userrole != null">
         userRole = #{record.userrole,jdbcType=VARCHAR},
-      </if>
-      <if test="record.userage != null">
         userAge = #{record.userage,jdbcType=INTEGER},
-      </if>
-      <if test="record.usersex != null">
         userSex = #{record.usersex,jdbcType=VARCHAR},
-      </if>
-      <if test="record.useraddress != null">
         userAddress = #{record.useraddress,jdbcType=VARCHAR},
-      </if>
-      <if test="record.useremail != null">
         userEmail = #{record.useremail,jdbcType=VARCHAR},
-      </if>
-      <if test="record.userphone != null">
-        userPhone = #{record.userphone,jdbcType=VARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update userLogin
-    set userId = #{record.userid,jdbcType=INTEGER},
-      userName = #{record.username,jdbcType=VARCHAR},
-      userPassword = #{record.userpassword,jdbcType=VARCHAR},
-      userRole = #{record.userrole,jdbcType=VARCHAR},
-      userAge = #{record.userage,jdbcType=INTEGER},
-      userSex = #{record.usersex,jdbcType=VARCHAR},
-      userAddress = #{record.useraddress,jdbcType=VARCHAR},
-      userEmail = #{record.useremail,jdbcType=VARCHAR},
-      userPhone = #{record.userphone,jdbcType=VARCHAR}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.spring.eeg.mbg.model.Userlogin">
-    update userLogin
-    <set>
-      <if test="username != null">
-        userName = #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="userpassword != null">
-        userPassword = #{userpassword,jdbcType=VARCHAR},
-      </if>
-      <if test="userrole != null">
-        userRole = #{userrole,jdbcType=VARCHAR},
-      </if>
-      <if test="userage != null">
-        userAge = #{userage,jdbcType=INTEGER},
-      </if>
-      <if test="usersex != null">
-        userSex = #{usersex,jdbcType=VARCHAR},
-      </if>
-      <if test="useraddress != null">
-        userAddress = #{useraddress,jdbcType=VARCHAR},
-      </if>
-      <if test="useremail != null">
-        userEmail = #{useremail,jdbcType=VARCHAR},
-      </if>
-      <if test="userphone != null">
-        userPhone = #{userphone,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where userId = #{userid,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.spring.eeg.mbg.model.Userlogin">
+        userPhone = #{record.userphone,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.spring.eeg.mbg.model.Userlogin">
+        update userLogin
+        <set>
+            <if test="username != null">
+                userName = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="userpassword != null">
+                userPassword = #{userpassword,jdbcType=VARCHAR},
+            </if>
+            <if test="userrole != null">
+                userRole = #{userrole,jdbcType=VARCHAR},
+            </if>
+            <if test="userage != null">
+                userAge = #{userage,jdbcType=INTEGER},
+            </if>
+            <if test="usersex != null">
+                userSex = #{usersex,jdbcType=VARCHAR},
+            </if>
+            <if test="useraddress != null">
+                userAddress = #{useraddress,jdbcType=VARCHAR},
+            </if>
+            <if test="useremail != null">
+                userEmail = #{useremail,jdbcType=VARCHAR},
+            </if>
+            <if test="userphone != null">
+                userPhone = #{userphone,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where userId = #{userid,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.spring.eeg.mbg.model.Userlogin">
     update userLogin
     set userName = #{username,jdbcType=VARCHAR},
       userPassword = #{userpassword,jdbcType=VARCHAR},

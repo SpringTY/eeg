@@ -21,7 +21,7 @@
             <property name="forceBigDecimals" value="false" />
         </javaTypeResolver>
 
-        <javaModelGenerator targetPackage="com.spring.eeg.ebg.model" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="com.spring.eeg.mbg.model" targetProject="src/main/java">
             <property name="enableSubPackages" value="true" />
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
@@ -34,7 +34,7 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
-        <table tableName="eegFileList"/>
+        <!--<table tableName="eegFileList"/>-->
         <!--<table tableName="friendList"/>-->
         <!--<table tableName="learnState"/>-->
         <!--<table tableName="userLastWeekState"/>-->

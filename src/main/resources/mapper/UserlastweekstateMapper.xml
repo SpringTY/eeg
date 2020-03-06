@@ -17,6 +17,7 @@
     <result column="saturdayAttentionTime" jdbcType="INTEGER" property="saturdayattentiontime" />
     <result column="sunDayTotalTime" jdbcType="INTEGER" property="sundaytotaltime" />
     <result column="sundayAttentionTime" jdbcType="INTEGER" property="sundayattentiontime" />
+    <result column="lastUpdate" jdbcType="DATE" property="lastupdate" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -80,7 +81,7 @@
     userId, mondayTotalTime, mondayAttentionTime, tuesDayTotalTime, tuesDayAttentionTime, 
     wednesdayTotalTime, wednesdayAttentionTime, thursdayTotalTime, thursdayAttentionTime, 
     fridayTotalTime, fridayAttentionTime, saturdayTotalTime, saturdayAttentionTime, sunDayTotalTime, 
-    sundayAttentionTime
+    sundayAttentionTime, lastUpdate
   </sql>
   <select id="selectByExample" parameterType="com.spring.eeg.mbg.model.UserlastweekstateExample" resultMap="BaseResultMap">
     select
@@ -119,14 +120,14 @@
       thursdayTotalTime, thursdayAttentionTime, 
       fridayTotalTime, fridayAttentionTime, saturdayTotalTime, 
       saturdayAttentionTime, sunDayTotalTime, 
-      sundayAttentionTime)
+      sundayAttentionTime, lastUpdate)
     values (#{userid,jdbcType=INTEGER}, #{mondaytotaltime,jdbcType=INTEGER}, #{mondayattentiontime,jdbcType=INTEGER}, 
       #{tuesdaytotaltime,jdbcType=INTEGER}, #{tuesdayattentiontime,jdbcType=INTEGER}, 
       #{wednesdaytotaltime,jdbcType=INTEGER}, #{wednesdayattentiontime,jdbcType=INTEGER}, 
       #{thursdaytotaltime,jdbcType=INTEGER}, #{thursdayattentiontime,jdbcType=INTEGER}, 
       #{fridaytotaltime,jdbcType=INTEGER}, #{fridayattentiontime,jdbcType=INTEGER}, #{saturdaytotaltime,jdbcType=INTEGER}, 
       #{saturdayattentiontime,jdbcType=INTEGER}, #{sundaytotaltime,jdbcType=INTEGER}, 
-      #{sundayattentiontime,jdbcType=INTEGER})
+      #{sundayattentiontime,jdbcType=INTEGER}, #{lastupdate,jdbcType=DATE})
   </insert>
   <insert id="insertSelective" parameterType="com.spring.eeg.mbg.model.Userlastweekstate">
     insert into userLastWeekState
@@ -176,6 +177,9 @@
       <if test="sundayattentiontime != null">
         sundayAttentionTime,
       </if>
+      <if test="lastupdate != null">
+        lastUpdate,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userid != null">
@@ -222,6 +226,9 @@
       </if>
       <if test="sundayattentiontime != null">
         #{sundayattentiontime,jdbcType=INTEGER},
+      </if>
+      <if test="lastupdate != null">
+        #{lastupdate,jdbcType=DATE},
       </if>
     </trim>
   </insert>
@@ -279,6 +286,9 @@
       <if test="record.sundayattentiontime != null">
         sundayAttentionTime = #{record.sundayattentiontime,jdbcType=INTEGER},
       </if>
+      <if test="record.lastupdate != null">
+        lastUpdate = #{record.lastupdate,jdbcType=DATE},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -300,7 +310,8 @@
       saturdayTotalTime = #{record.saturdaytotaltime,jdbcType=INTEGER},
       saturdayAttentionTime = #{record.saturdayattentiontime,jdbcType=INTEGER},
       sunDayTotalTime = #{record.sundaytotaltime,jdbcType=INTEGER},
-      sundayAttentionTime = #{record.sundayattentiontime,jdbcType=INTEGER}
+      sundayAttentionTime = #{record.sundayattentiontime,jdbcType=INTEGER},
+      lastUpdate = #{record.lastupdate,jdbcType=DATE}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -350,6 +361,9 @@
       <if test="sundayattentiontime != null">
         sundayAttentionTime = #{sundayattentiontime,jdbcType=INTEGER},
       </if>
+      <if test="lastupdate != null">
+        lastUpdate = #{lastupdate,jdbcType=DATE},
+      </if>
     </set>
     where userId = #{userid,jdbcType=INTEGER}
   </update>
@@ -368,7 +382,8 @@
       saturdayTotalTime = #{saturdaytotaltime,jdbcType=INTEGER},
       saturdayAttentionTime = #{saturdayattentiontime,jdbcType=INTEGER},
       sunDayTotalTime = #{sundaytotaltime,jdbcType=INTEGER},
-      sundayAttentionTime = #{sundayattentiontime,jdbcType=INTEGER}
+      sundayAttentionTime = #{sundayattentiontime,jdbcType=INTEGER},
+      lastUpdate = #{lastupdate,jdbcType=DATE}
     where userId = #{userid,jdbcType=INTEGER}
   </update>
 </mapper>

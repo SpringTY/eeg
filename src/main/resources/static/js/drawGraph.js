@@ -116,9 +116,9 @@ function drawLastWeek(id) {
     myChart.setOption(option);
 }
 
-function drawLastWeekConstitute(id) {
+function drawLastWeekConstitute(id,lastWeekValue) {
     var myChart = echarts.init(document.getElementById(id));
-    var lastWeekValue = getLastWeekConstitute()
+    // var lastWeekValue = getLastWeekConstitute()
     var data = {
         legendData: ['专注时间', '非专注时间'],
         seriesData: [
@@ -167,21 +167,23 @@ function drawLastWeekConstitute(id) {
 
 }
 
-function getLastWeekConstitute() {
-    var constitute = null
+function getLastWeekConstitute(id) {
+    // alert("getLastWeek")
     $.ajax({
             type: "GET",
-            url: "getLastWeek",
-            async: false,
+            url: "/getLastWeek",
+            // async: false,
             success: function (result) {
-                constitute = result
+                // alert(1)
+                drawLastWeekConstitute(id,result)
             }
         }
     )
+    // alert(constitute)
+    console.log('TAG:getLastWeek');
     // console.log(constitute);
     // console.log(constitute['unAttentionTime']);
     // console.log(constitute['attentionTime']);
-    return constitute
 }
 
 // getLastWeekConstitute()

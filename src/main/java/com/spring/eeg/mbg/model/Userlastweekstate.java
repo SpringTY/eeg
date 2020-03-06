@@ -1,5 +1,7 @@
 package com.spring.eeg.mbg.model;
 
+import java.util.Date;
+
 public class Userlastweekstate {
     private Integer userid;
 
@@ -30,6 +32,8 @@ public class Userlastweekstate {
     private Integer sundaytotaltime;
 
     private Integer sundayattentiontime;
+
+    private Date lastupdate;
 
     public Integer getUserid() {
         return userid;
@@ -149,5 +153,13 @@ public class Userlastweekstate {
 
     public void setSundayattentiontime(Integer sundayattentiontime) {
         this.sundayattentiontime = sundayattentiontime;
+    }
+
+    public Date getLastupdate() {
+        return lastupdate;
+    }
+
+    public void setLastupdate(Date lastupdate) {
+        this.lastupdate = lastupdate;
     }
 }

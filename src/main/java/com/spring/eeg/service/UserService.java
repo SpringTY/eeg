@@ -1,0 +1,33 @@
+package com.spring.eeg.service;
+
+import com.spring.eeg.Dao.UserLoginDao;
+import com.spring.eeg.mbg.model.Userlogin;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+@Service
+public class UserService {
+    @Autowired
+    PasswordEncoder passwordEncoder;
+    @Autowired
+    UserLoginDao userLoginDao;
+    @Autowired
+    EEGStatisticService EEGStatisticService;
+
+    public void registerNormalUser(Userlogin userlogin) {
+        userlogin.setUserrole("user");
+        String password = userlogin.getUserpassword();
+        String passwordEncode = passwordEncoder.encode(password);
+        userlogin.setUserpassword(passwordEncode);
+        // User存入数据库
+        userLoginDao.insertUserLogin(userlogin);
+        // 实在没解决mybatis 自动生成主键的返回值，按照网上方法没生效
+        // 所以第二次查询数据库 以后解决 这样效率很低
+        String userphone = userlogin.getUserphone();
+        Userlogin userLoginByPhone = userLoginDao.getUserLoginByPhone(userphone);
+        Integer userid = userLoginByPhone.getUserid();
+        // 初始状态存入数据库
+        EEGStatisticService.initLastWeekState(userid);
+    }
+}

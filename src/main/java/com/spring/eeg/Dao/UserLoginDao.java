@@ -18,7 +18,13 @@ public class UserLoginDao {
         UserloginExample.Criteria criteria = userloginExample.createCriteria();
         criteria.andUserphoneEqualTo(userPhone);
         List<Userlogin> userlogins = userloginMapper.selectByExample(userloginExample);
-        if (userlogins.size() == 0) return null;
+        if (userlogins.size() == 0) {
+            return null;
+        }
         return userlogins.get(0);
+    }
+
+    public Integer insertUserLogin(Userlogin userLogin) {
+        return userloginMapper.insertSelective(userLogin);
     }
 }

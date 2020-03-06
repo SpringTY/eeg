@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class TestController {
     @ResponseBody
-    @RequestMapping(value = "getLastWeek")
+    @RequestMapping(value = "/getLastWeek")
     public Pair getLastWeek() {
         System.out.println("TAG: getLastWeek");
         return Pair.getPair(20,20);
