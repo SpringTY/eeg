@@ -5,6 +5,8 @@ import com.spring.eeg.mbg.dao.EegfilelistMapper;
 import com.spring.eeg.mbg.dao.UserloginMapper;
 import com.spring.eeg.mbg.model.Eegfilelist;
 import com.spring.eeg.mbg.model.EegfilelistExample;
+import com.spring.eeg.mbg.model.Userlastweekstate;
+import com.spring.eeg.service.EEGStatisticService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ class EegApplicationTests {
     UserLoginDao userLoginDao;
     @Autowired
     EegfilelistMapper eegfilelistMapper;
+    @Autowired
+    EEGStatisticService eegStatisticService;
+
     @Test
     void contextLoads() {
 //        UserloginExample userloginExample = new UserloginExample();
@@ -37,5 +42,10 @@ class EegApplicationTests {
         List<Eegfilelist> eegfilelists = eegfilelistMapper.selectByExample(new EegfilelistExample());
         System.out.println(eegfilelists);
     }
+    @Test
+    void testEEGLastWeek(){
+        System.out.println(1);
+        Userlastweekstate lastWeekState = eegStatisticService.getLastWeekState(10);
 
+    }
 }

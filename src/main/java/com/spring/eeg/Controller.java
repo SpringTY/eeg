@@ -13,15 +13,7 @@ import java.util.Map;
 @org.springframework.stereotype.Controller
 public class Controller {
 
-    @RequestMapping(value = "/index")
-    public String get(Map<String, Object> map) {
-        System.out.println("con");
-        map.put("mass", "1");
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        User user = (User)  authentication.getPrincipal();
-//        System.out.println(user);
-        return "index.html";
-    }
+
 
     @RequestMapping(value = "/document")
     public String document(Map<String, Object> map){

@@ -1,9 +1,33 @@
 package com.spring.eeg.mbg.model;
 
-import java.util.Date;
+import lombok.Data;
 
+import java.util.Date;
+@Data
 public class Userlastweekstate {
     private Integer userid;
+
+    public Userlastweekstate() {
+    }
+
+    public Userlastweekstate(Integer userid, Integer mondaytotaltime, Integer mondayattentiontime, Integer tuesdaytotaltime, Integer tuesdayattentiontime, Integer wednesdaytotaltime, Integer wednesdayattentiontime, Integer thursdaytotaltime, Integer thursdayattentiontime, Integer fridaytotaltime, Integer fridayattentiontime, Integer saturdaytotaltime, Integer saturdayattentiontime, Integer sundaytotaltime, Integer sundayattentiontime, Date lastupdate) {
+        this.userid = userid;
+        this.mondaytotaltime = mondaytotaltime;
+        this.mondayattentiontime = mondayattentiontime;
+        this.tuesdaytotaltime = tuesdaytotaltime;
+        this.tuesdayattentiontime = tuesdayattentiontime;
+        this.wednesdaytotaltime = wednesdaytotaltime;
+        this.wednesdayattentiontime = wednesdayattentiontime;
+        this.thursdaytotaltime = thursdaytotaltime;
+        this.thursdayattentiontime = thursdayattentiontime;
+        this.fridaytotaltime = fridaytotaltime;
+        this.fridayattentiontime = fridayattentiontime;
+        this.saturdaytotaltime = saturdaytotaltime;
+        this.saturdayattentiontime = saturdayattentiontime;
+        this.sundaytotaltime = sundaytotaltime;
+        this.sundayattentiontime = sundayattentiontime;
+        this.lastupdate = lastupdate;
+    }
 
     private Integer mondaytotaltime;
 

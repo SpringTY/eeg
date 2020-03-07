@@ -3,10 +3,9 @@ package com.spring.eeg.mbg.dao;
 import com.spring.eeg.mbg.model.Learnstate;
 import com.spring.eeg.mbg.model.LearnstateExample;
 import com.spring.eeg.mbg.model.LearnstateKey;
+import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public interface LearnstateMapper {

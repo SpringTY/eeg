@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Map;
+
 @Controller
 public class UserController {
     @Autowired
@@ -21,8 +23,16 @@ public class UserController {
         userService.registerNormalUser(userlogin);
         return "/login";
     }
+
     @RequestMapping(value = "/loginPage")
     public String loginPage(){
         return "login.html";
+    }
+
+    @RequestMapping(value = "/index")
+    public String index(Map<String, Object> map) {
+        System.out.println("con");
+        map.put("mass", "1");
+        return "index.html";
     }
 }

@@ -1,6 +1,8 @@
 package com.spring.eeg.mbg.model;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 public class LearnstateExample {
@@ -104,6 +106,32 @@ public class LearnstateExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
+        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
+            if (value == null) {
+                throw new RuntimeException("Value for " + property + " cannot be null");
+            }
+            addCriterion(condition, new java.sql.Date(value.getTime()), property);
+        }
+
+        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
+            if (values == null || values.size() == 0) {
+                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
+            }
+            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
+            Iterator<Date> iter = values.iterator();
+            while (iter.hasNext()) {
+                dateList.add(new java.sql.Date(iter.next().getTime()));
+            }
+            addCriterion(condition, dateList, property);
+        }
+
+        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
+            if (value1 == null || value2 == null) {
+                throw new RuntimeException("Between values for " + property + " cannot be null");
+            }
+            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
+        }
+
         public Criteria andUseridIsNull() {
             addCriterion("userId is null");
             return (Criteria) this;
@@ -174,53 +202,53 @@ public class LearnstateExample {
             return (Criteria) this;
         }
 
-        public Criteria andLearndateEqualTo(Integer value) {
-            addCriterion("learnDate =", value, "learndate");
+        public Criteria andLearndateEqualTo(Date value) {
+            addCriterionForJDBCDate("learnDate =", value, "learndate");
             return (Criteria) this;
         }
 
-        public Criteria andLearndateNotEqualTo(Integer value) {
-            addCriterion("learnDate <>", value, "learndate");
+        public Criteria andLearndateNotEqualTo(Date value) {
+            addCriterionForJDBCDate("learnDate <>", value, "learndate");
             return (Criteria) this;
         }
 
-        public Criteria andLearndateGreaterThan(Integer value) {
-            addCriterion("learnDate >", value, "learndate");
+        public Criteria andLearndateGreaterThan(Date value) {
+            addCriterionForJDBCDate("learnDate >", value, "learndate");
             return (Criteria) this;
         }
 
-        public Criteria andLearndateGreaterThanOrEqualTo(Integer value) {
-            addCriterion("learnDate >=", value, "learndate");
+        public Criteria andLearndateGreaterThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("learnDate >=", value, "learndate");
             return (Criteria) this;
         }
 
-        public Criteria andLearndateLessThan(Integer value) {
-            addCriterion("learnDate <", value, "learndate");
+        public Criteria andLearndateLessThan(Date value) {
+            addCriterionForJDBCDate("learnDate <", value, "learndate");
             return (Criteria) this;
         }
 
-        public Criteria andLearndateLessThanOrEqualTo(Integer value) {
-            addCriterion("learnDate <=", value, "learndate");
+        public Criteria andLearndateLessThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("learnDate <=", value, "learndate");
             return (Criteria) this;
         }
 
-        public Criteria andLearndateIn(List<Integer> values) {
-            addCriterion("learnDate in", values, "learndate");
+        public Criteria andLearndateIn(List<Date> values) {
+            addCriterionForJDBCDate("learnDate in", values, "learndate");
             return (Criteria) this;
         }
 
-        public Criteria andLearndateNotIn(List<Integer> values) {
-            addCriterion("learnDate not in", values, "learndate");
+        public Criteria andLearndateNotIn(List<Date> values) {
+            addCriterionForJDBCDate("learnDate not in", values, "learndate");
             return (Criteria) this;
         }
 
-        public Criteria andLearndateBetween(Integer value1, Integer value2) {
-            addCriterion("learnDate between", value1, value2, "learndate");
+        public Criteria andLearndateBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("learnDate between", value1, value2, "learndate");
             return (Criteria) this;
         }
 
-        public Criteria andLearndateNotBetween(Integer value1, Integer value2) {
-            addCriterion("learnDate not between", value1, value2, "learndate");
+        public Criteria andLearndateNotBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("learnDate not between", value1, value2, "learndate");
             return (Criteria) this;
         }
 

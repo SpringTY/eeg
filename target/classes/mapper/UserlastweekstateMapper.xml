@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.eeg.mbg.dao.UserlastweekstateMapper">
+  <resultMap id="BaseResultMap" type="com.spring.eeg.mbg.model.Userlastweekstate">
+    <id column="userId" jdbcType="INTEGER" property="userid" />
+    <result column="mondayTotalTime" jdbcType="INTEGER" property="mondaytotaltime" />
+    <result column="mondayAttentionTime" jdbcType="INTEGER" property="mondayattentiontime" />
+    <result column="tuesDayTotalTime" jdbcType="INTEGER" property="tuesdaytotaltime" />
+    <result column="tuesDayAttentionTime" jdbcType="INTEGER" property="tuesdayattentiontime" />
+    <result column="wednesdayTotalTime" jdbcType="INTEGER" property="wednesdaytotaltime" />
+    <result column="wednesdayAttentionTime" jdbcType="INTEGER" property="wednesdayattentiontime" />
+    <result column="thursdayTotalTime" jdbcType="INTEGER" property="thursdaytotaltime" />
+    <result column="thursdayAttentionTime" jdbcType="INTEGER" property="thursdayattentiontime" />
+    <result column="fridayTotalTime" jdbcType="INTEGER" property="fridaytotaltime" />
+    <result column="fridayAttentionTime" jdbcType="INTEGER" property="fridayattentiontime" />
+    <result column="saturdayTotalTime" jdbcType="INTEGER" property="saturdaytotaltime" />
+    <result column="saturdayAttentionTime" jdbcType="INTEGER" property="saturdayattentiontime" />
+    <result column="sunDayTotalTime" jdbcType="INTEGER" property="sundaytotaltime" />
+    <result column="sundayAttentionTime" jdbcType="INTEGER" property="sundayattentiontime" />
+    <result column="lastUpdate" jdbcType="DATE" property="lastupdate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    userId, mondayTotalTime, mondayAttentionTime, tuesDayTotalTime, tuesDayAttentionTime, 
+    wednesdayTotalTime, wednesdayAttentionTime, thursdayTotalTime, thursdayAttentionTime, 
+    fridayTotalTime, fridayAttentionTime, saturdayTotalTime, saturdayAttentionTime, sunDayTotalTime, 
+    sundayAttentionTime, lastUpdate
+  </sql>
+  <select id="selectByExample" parameterType="com.spring.eeg.mbg.model.UserlastweekstateExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from userLastWeekState
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from userLastWeekState
+    where userId = #{userid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from userLastWeekState
+    where userId = #{userid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.spring.eeg.mbg.model.UserlastweekstateExample">
+    delete from userLastWeekState
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.spring.eeg.mbg.model.Userlastweekstate">
+    insert into userLastWeekState (userId, mondayTotalTime, mondayAttentionTime, 
+      tuesDayTotalTime, tuesDayAttentionTime, 
+      wednesdayTotalTime, wednesdayAttentionTime, 
+      thursdayTotalTime, thursdayAttentionTime, 
+      fridayTotalTime, fridayAttentionTime, saturdayTotalTime, 
+      saturdayAttentionTime, sunDayTotalTime, 
+      sundayAttentionTime, lastUpdate)
+    values (#{userid,jdbcType=INTEGER}, #{mondaytotaltime,jdbcType=INTEGER}, #{mondayattentiontime,jdbcType=INTEGER}, 
+      #{tuesdaytotaltime,jdbcType=INTEGER}, #{tuesdayattentiontime,jdbcType=INTEGER}, 
+      #{wednesdaytotaltime,jdbcType=INTEGER}, #{wednesdayattentiontime,jdbcType=INTEGER}, 
+      #{thursdaytotaltime,jdbcType=INTEGER}, #{thursdayattentiontime,jdbcType=INTEGER}, 
+      #{fridaytotaltime,jdbcType=INTEGER}, #{fridayattentiontime,jdbcType=INTEGER}, #{saturdaytotaltime,jdbcType=INTEGER}, 
+      #{saturdayattentiontime,jdbcType=INTEGER}, #{sundaytotaltime,jdbcType=INTEGER}, 
+      #{sundayattentiontime,jdbcType=INTEGER}, #{lastupdate,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.spring.eeg.mbg.model.Userlastweekstate">
+    insert into userLastWeekState
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="mondaytotaltime != null">
+        mondayTotalTime,
+      </if>
+      <if test="mondayattentiontime != null">
+        mondayAttentionTime,
+      </if>
+      <if test="tuesdaytotaltime != null">
+        tuesDayTotalTime,
+      </if>
+      <if test="tuesdayattentiontime != null">
+        tuesDayAttentionTime,
+      </if>
+      <if test="wednesdaytotaltime != null">
+        wednesdayTotalTime,
+      </if>
+      <if test="wednesdayattentiontime != null">
+        wednesdayAttentionTime,
+      </if>
+      <if test="thursdaytotaltime != null">
+        thursdayTotalTime,
+      </if>
+      <if test="thursdayattentiontime != null">
+        thursdayAttentionTime,
+      </if>
+      <if test="fridaytotaltime != null">
+        fridayTotalTime,
+      </if>
+      <if test="fridayattentiontime != null">
+        fridayAttentionTime,
+      </if>
+      <if test="saturdaytotaltime != null">
+        saturdayTotalTime,
+      </if>
+      <if test="saturdayattentiontime != null">
+        saturdayAttentionTime,
+      </if>
+      <if test="sundaytotaltime != null">
+        sunDayTotalTime,
+      </if>
+      <if test="sundayattentiontime != null">
+        sundayAttentionTime,
+      </if>
+      <if test="lastupdate != null">
+        lastUpdate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="mondaytotaltime != null">
+        #{mondaytotaltime,jdbcType=INTEGER},
+      </if>
+      <if test="mondayattentiontime != null">
+        #{mondayattentiontime,jdbcType=INTEGER},
+      </if>
+      <if test="tuesdaytotaltime != null">
+        #{tuesdaytotaltime,jdbcType=INTEGER},
+      </if>
+      <if test="tuesdayattentiontime != null">
+        #{tuesdayattentiontime,jdbcType=INTEGER},
+      </if>
+      <if test="wednesdaytotaltime != null">
+        #{wednesdaytotaltime,jdbcType=INTEGER},
+      </if>
+      <if test="wednesdayattentiontime != null">
+        #{wednesdayattentiontime,jdbcType=INTEGER},
+      </if>
+      <if test="thursdaytotaltime != null">
+        #{thursdaytotaltime,jdbcType=INTEGER},
+      </if>
+      <if test="thursdayattentiontime != null">
+        #{thursdayattentiontime,jdbcType=INTEGER},
+      </if>
+      <if test="fridaytotaltime != null">
+        #{fridaytotaltime,jdbcType=INTEGER},
+      </if>
+      <if test="fridayattentiontime != null">
+        #{fridayattentiontime,jdbcType=INTEGER},
+      </if>
+      <if test="saturdaytotaltime != null">
+        #{saturdaytotaltime,jdbcType=INTEGER},
+      </if>
+      <if test="saturdayattentiontime != null">
+        #{saturdayattentiontime,jdbcType=INTEGER},
+      </if>
+      <if test="sundaytotaltime != null">
+        #{sundaytotaltime,jdbcType=INTEGER},
+      </if>
+      <if test="sundayattentiontime != null">
+        #{sundayattentiontime,jdbcType=INTEGER},
+      </if>
+      <if test="lastupdate != null">
+        #{lastupdate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.spring.eeg.mbg.model.UserlastweekstateExample" resultType="java.lang.Long">
+    select count(*) from userLastWeekState
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update userLastWeekState
+    <set>
+      <if test="record.userid != null">
+        userId = #{record.userid,jdbcType=INTEGER},
+      </if>
+      <if test="record.mondaytotaltime != null">
+        mondayTotalTime = #{record.mondaytotaltime,jdbcType=INTEGER},
+      </if>
+      <if test="record.mondayattentiontime != null">
+        mondayAttentionTime = #{record.mondayattentiontime,jdbcType=INTEGER},
+      </if>
+      <if test="record.tuesdaytotaltime != null">
+        tuesDayTotalTime = #{record.tuesdaytotaltime,jdbcType=INTEGER},
+      </if>
+      <if test="record.tuesdayattentiontime != null">
+        tuesDayAttentionTime = #{record.tuesdayattentiontime,jdbcType=INTEGER},
+      </if>
+      <if test="record.wednesdaytotaltime != null">
+        wednesdayTotalTime = #{record.wednesdaytotaltime,jdbcType=INTEGER},
+      </if>
+      <if test="record.wednesdayattentiontime != null">
+        wednesdayAttentionTime = #{record.wednesdayattentiontime,jdbcType=INTEGER},
+      </if>
+      <if test="record.thursdaytotaltime != null">
+        thursdayTotalTime = #{record.thursdaytotaltime,jdbcType=INTEGER},
+      </if>
+      <if test="record.thursdayattentiontime != null">
+        thursdayAttentionTime = #{record.thursdayattentiontime,jdbcType=INTEGER},
+      </if>
+      <if test="record.fridaytotaltime != null">
+        fridayTotalTime = #{record.fridaytotaltime,jdbcType=INTEGER},
+      </if>
+      <if test="record.fridayattentiontime != null">
+        fridayAttentionTime = #{record.fridayattentiontime,jdbcType=INTEGER},
+      </if>
+      <if test="record.saturdaytotaltime != null">
+        saturdayTotalTime = #{record.saturdaytotaltime,jdbcType=INTEGER},
+      </if>
+      <if test="record.saturdayattentiontime != null">
+        saturdayAttentionTime = #{record.saturdayattentiontime,jdbcType=INTEGER},
+      </if>
+      <if test="record.sundaytotaltime != null">
+        sunDayTotalTime = #{record.sundaytotaltime,jdbcType=INTEGER},
+      </if>
+      <if test="record.sundayattentiontime != null">
+        sundayAttentionTime = #{record.sundayattentiontime,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastupdate != null">
+        lastUpdate = #{record.lastupdate,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update userLastWeekState
+    set userId = #{record.userid,jdbcType=INTEGER},
+      mondayTotalTime = #{record.mondaytotaltime,jdbcType=INTEGER},
+      mondayAttentionTime = #{record.mondayattentiontime,jdbcType=INTEGER},
+      tuesDayTotalTime = #{record.tuesdaytotaltime,jdbcType=INTEGER},
+      tuesDayAttentionTime = #{record.tuesdayattentiontime,jdbcType=INTEGER},
+      wednesdayTotalTime = #{record.wednesdaytotaltime,jdbcType=INTEGER},
+      wednesdayAttentionTime = #{record.wednesdayattentiontime,jdbcType=INTEGER},
+      thursdayTotalTime = #{record.thursdaytotaltime,jdbcType=INTEGER},
+      thursdayAttentionTime = #{record.thursdayattentiontime,jdbcType=INTEGER},
+      fridayTotalTime = #{record.fridaytotaltime,jdbcType=INTEGER},
+      fridayAttentionTime = #{record.fridayattentiontime,jdbcType=INTEGER},
+      saturdayTotalTime = #{record.saturdaytotaltime,jdbcType=INTEGER},
+      saturdayAttentionTime = #{record.saturdayattentiontime,jdbcType=INTEGER},
+      sunDayTotalTime = #{record.sundaytotaltime,jdbcType=INTEGER},
+      sundayAttentionTime = #{record.sundayattentiontime,jdbcType=INTEGER},
+      lastUpdate = #{record.lastupdate,jdbcType=DATE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.spring.eeg.mbg.model.Userlastweekstate">
+    update userLastWeekState
+    <set>
+      <if test="mondaytotaltime != null">
+        mondayTotalTime = #{mondaytotaltime,jdbcType=INTEGER},
+      </if>
+      <if test="mondayattentiontime != null">
+        mondayAttentionTime = #{mondayattentiontime,jdbcType=INTEGER},
+      </if>
+      <if test="tuesdaytotaltime != null">
+        tuesDayTotalTime = #{tuesdaytotaltime,jdbcType=INTEGER},
+      </if>
+      <if test="tuesdayattentiontime != null">
+        tuesDayAttentionTime = #{tuesdayattentiontime,jdbcType=INTEGER},
+      </if>
+      <if test="wednesdaytotaltime != null">
+        wednesdayTotalTime = #{wednesdaytotaltime,jdbcType=INTEGER},
+      </if>
+      <if test="wednesdayattentiontime != null">
+        wednesdayAttentionTime = #{wednesdayattentiontime,jdbcType=INTEGER},
+      </if>
+      <if test="thursdaytotaltime != null">
+        thursdayTotalTime = #{thursdaytotaltime,jdbcType=INTEGER},
+      </if>
+      <if test="thursdayattentiontime != null">
+        thursdayAttentionTime = #{thursdayattentiontime,jdbcType=INTEGER},
+      </if>
+      <if test="fridaytotaltime != null">
+        fridayTotalTime = #{fridaytotaltime,jdbcType=INTEGER},
+      </if>
+      <if test="fridayattentiontime != null">
+        fridayAttentionTime = #{fridayattentiontime,jdbcType=INTEGER},
+      </if>
+      <if test="saturdaytotaltime != null">
+        saturdayTotalTime = #{saturdaytotaltime,jdbcType=INTEGER},
+      </if>
+      <if test="saturdayattentiontime != null">
+        saturdayAttentionTime = #{saturdayattentiontime,jdbcType=INTEGER},
+      </if>
+      <if test="sundaytotaltime != null">
+        sunDayTotalTime = #{sundaytotaltime,jdbcType=INTEGER},
+      </if>
+      <if test="sundayattentiontime != null">
+        sundayAttentionTime = #{sundayattentiontime,jdbcType=INTEGER},
+      </if>
+      <if test="lastupdate != null">
+        lastUpdate = #{lastupdate,jdbcType=DATE},
+      </if>
+    </set>
+    where userId = #{userid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.spring.eeg.mbg.model.Userlastweekstate">
+    update userLastWeekState
+    set mondayTotalTime = #{mondaytotaltime,jdbcType=INTEGER},
+      mondayAttentionTime = #{mondayattentiontime,jdbcType=INTEGER},
+      tuesDayTotalTime = #{tuesdaytotaltime,jdbcType=INTEGER},
+      tuesDayAttentionTime = #{tuesdayattentiontime,jdbcType=INTEGER},
+      wednesdayTotalTime = #{wednesdaytotaltime,jdbcType=INTEGER},
+      wednesdayAttentionTime = #{wednesdayattentiontime,jdbcType=INTEGER},
+      thursdayTotalTime = #{thursdaytotaltime,jdbcType=INTEGER},
+      thursdayAttentionTime = #{thursdayattentiontime,jdbcType=INTEGER},
+      fridayTotalTime = #{fridaytotaltime,jdbcType=INTEGER},
+      fridayAttentionTime = #{fridayattentiontime,jdbcType=INTEGER},
+      saturdayTotalTime = #{saturdaytotaltime,jdbcType=INTEGER},
+      saturdayAttentionTime = #{saturdayattentiontime,jdbcType=INTEGER},
+      sunDayTotalTime = #{sundaytotaltime,jdbcType=INTEGER},
+      sundayAttentionTime = #{sundayattentiontime,jdbcType=INTEGER},
+      lastUpdate = #{lastupdate,jdbcType=DATE}
+    where userId = #{userid,jdbcType=INTEGER}
+  </update>
+</mapper>

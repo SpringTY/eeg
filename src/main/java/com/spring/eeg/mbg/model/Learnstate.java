@@ -1,5 +1,8 @@
 package com.spring.eeg.mbg.model;
 
+import lombok.ToString;
+
+@ToString
 public class Learnstate extends LearnstateKey {
     private Integer attentiontime;
 
