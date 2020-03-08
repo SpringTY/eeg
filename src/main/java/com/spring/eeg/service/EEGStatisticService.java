@@ -13,10 +13,13 @@ import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import javax.swing.text.DateFormatter;
+import java.text.DateFormat;
+import java.time.*;
+import java.time.temporal.TemporalAdjusters;
+import java.time.temporal.TemporalField;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -26,6 +29,7 @@ public class EEGStatisticService {
     UserLastWeekStateDao userLastWeekStateDao;
     @Autowired
     LearnStateDao learnStateDao;
+
     /**
      * 新增用户初始化本周状态信息
      * @param userId
@@ -50,6 +54,14 @@ public class EEGStatisticService {
         userlastweekstate.setSundaytotaltime(0);
         userLastWeekStateDao.insert(userlastweekstate);
     }
+    private boolean isLastUpdateInValid(Date lastUpdateDate){
+        // 对应localDate
+        LocalDate last = DateUtil.toLocalDate(lastUpdateDate);
+        LocalDate now = LocalDate.now();
+        // 有效期
+        LocalDate lastValidTime = last.plusDays(7);
+        return lastValidTime.isBefore(now);
+    }
 
     /**
      * 得到上周信息
@@ -60,17 +72,10 @@ public class EEGStatisticService {
         Userlastweekstate userlastweekstate = userLastWeekStateDao.getUserLastWeekState(userId);
         //上次状态更新日期
         Date lastUpdate = userlastweekstate.getLastupdate();
-        // 对应localDate
-        LocalDate last = DateUtil.toLocalDate(lastUpdate);
-        LocalDate now = LocalDate.now();
-        // 有效期
-        LocalDate lastValidTime = last.plusDays(7);
-
-        if(lastValidTime.isBefore(now)){
+        if(isLastUpdateInValid(lastUpdate)){
             System.out.println("update");
             upDateLastWeekState(userId);
         }
-
         return userLastWeekStateDao.getUserLastWeekState(userId);
     }
 
@@ -124,13 +129,35 @@ public class EEGStatisticService {
     }
     public EEGTime getLastWeekEEGTime(Integer userId){
         List<Learnstate> lastWeekLearnState = getLastWeekLearnState(userId);
+
         int attentionTime = 0;
         int totalTime = 0;
 
         for (Learnstate learnstate : lastWeekLearnState) {
-            attentionTime+=learnstate.getAttentiontime();
+            attentionTime +=learnstate.getAttentiontime();
             totalTime+=learnstate.getTotaltime();
         }
-        return new EEGTime(totalTime, attentionTime);
+        System.out.println(2);
+
+        return new EEGTime(totalTime, attentionTime,totalTime - attentionTime);
+    }
+
+    public List<List> getLearnStateCurrentYear(Integer userId){
+        return getLearnState(userId,LocalDate.now());
+    }
+    public List<List> getLearnState(Integer userId, LocalDate date){
+        LocalDate firstDayOfLastYear = date.with(TemporalAdjusters.firstDayOfYear());
+        LocalDate lastDayOfLastYear = date.with(TemporalAdjusters.lastDayOfYear());
+        List<Learnstate> learnStateBetweenDate = learnStateDao.getLearnStateBetweenDate(userId,
+                DateUtil.toUtilDate(firstDayOfLastYear),
+                DateUtil.toUtilDate(lastDayOfLastYear));
+        List<List> learnStates= new ArrayList<>();
+        for (Learnstate learnstate : learnStateBetweenDate) {
+            Date learnDate = learnstate.getLearndate();
+            LocalDate localDate = DateUtil.toLocalDate(learnDate);
+            String dateString = localDate.toString();
+            learnStates.add(Arrays.asList(dateString,learnstate.getTotaltime()));
+        }
+        return learnStates;
     }
 }

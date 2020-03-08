@@ -7,12 +7,13 @@ import org.springframework.stereotype.Repository;
 public class EEGTime {
     Integer totalTime;
     Integer attentionTime;
-
+    Integer unAttentionTime;
     public EEGTime() {
     }
 
-    public EEGTime(Integer totalTime, Integer attentionTime) {
+    public EEGTime(Integer totalTime, Integer attentionTime, Integer unAttentionTime) {
         this.totalTime = totalTime;
         this.attentionTime = attentionTime;
+        this.unAttentionTime = unAttentionTime;
     }
 }

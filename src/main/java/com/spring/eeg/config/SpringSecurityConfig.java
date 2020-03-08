@@ -1,6 +1,7 @@
 package com.spring.eeg.config;
 
 import com.spring.eeg.Handler.FailureHanderImp;
+import com.spring.eeg.Handler.SuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,7 +21,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated().and()
                 .formLogin().loginPage("/loginPage").loginProcessingUrl("/login/submit").
                 failureHandler(new FailureHanderImp()).
-                successForwardUrl("/index").and().cors();
+                successHandler(new SuccessHandler()).and().cors();
 //        http.csrf().disable().authorizeRequests().anyRequest().permitAll().and().cors();
     }
 

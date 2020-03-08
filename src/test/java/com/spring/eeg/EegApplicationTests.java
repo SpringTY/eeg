@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.xml.transform.Source;
+import java.time.LocalDate;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -44,8 +46,8 @@ class EegApplicationTests {
     }
     @Test
     void testEEGLastWeek(){
-        System.out.println(1);
-        Userlastweekstate lastWeekState = eegStatisticService.getLastWeekState(10);
-
+//        System.out.println(1);
+//        Userlastweekstate lastWeekState = eegStatisticService.getLastWeekState(10);
+        System.out.println(LocalDate.now().getYear());
     }
 }

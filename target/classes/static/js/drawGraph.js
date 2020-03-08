@@ -7,25 +7,19 @@ var port = '8080'
 var server = host + ':' + port + '/'
 console.log("drawGraph.js TAG");
 
-function getVirtulData(year) {
-    year = year || '2020';
-    var date = +echarts.number.parseDate(year + '-01-01');
-    var end = +echarts.number.parseDate((+year + 1) + '-01-01');
-    var dayTime = 3600 * 24 * 1000;
-    var data = [];
-    for (var time = date; time < end; time += dayTime) {
-        data.push([
-            echarts.format.formatTime('yyyy-MM-dd', time),
-            Math.floor(Math.random() * 24 * 60)
-        ]);
-    }
-    return data;
+function getCurrentYearGraph(id) {
+    $.ajax({
+            type: "GET",
+            url: "/getCurrentYearLearnTime",
+            success: function (result) {
+                drawCalendarGraph(id,result)
+            }
+        }
+    )
 }
 
-function drawCalendarGraph(id) {
+function drawCalendarGraph(id,result) {
     var myChart = echarts.init(document.getElementById(id));
-
-
     option = {
         tooltip: {},
         visualMap: {
@@ -56,29 +50,43 @@ function drawCalendarGraph(id) {
         series: {
             type: 'heatmap',
             coordinateSystem: 'calendar',
-            data: getVirtulData(2020)
+            data: result
         }
     }
     myChart.setOption(option);
 }
 
-function drawLastWeek(id) {
+function drawLastWeek(id,result) {
     var myChart = echarts.init(document.getElementById(id));
     var attentionTime = {
         name: '专注时间',
         type: 'line',
-        stack: '总量',
+        stack: '专注时间',
         data: null
 
     }
     var totalTime = {
         name: '总时间',
         type: 'line',
-        stack: '总量',
+        stack: '总时间',
         data: null
     }
-    attentionTime.data = [120, 132, 101, 134, 90, 230, 210]
-    totalTime.data = [120, 132, 101, 134, 90, 230, 210]
+    attentionTime.data = [
+        result['mondayattentiontime'],
+        result['tuesdayattentiontime'],
+        result['wednesdayattentiontime'],
+        result['thursdayattentiontime'],
+        result['fridayattentiontime'],
+        result['saturdayattentiontime'],
+        result['sundayattentiontime']]
+    totalTime.data = [
+        result['mondayattentiontime'],
+        result['tuesdaytotaltime'],
+        result['wednesdaytotaltime'],
+        result['thursdaytotaltime'],
+        result['fridaytotaltime'],
+        result['saturdaytotaltime'],
+        result['sundaytotaltime']]
     option = {
         title: {
             text: 'Last Week Review'
@@ -116,9 +124,22 @@ function drawLastWeek(id) {
     myChart.setOption(option);
 }
 
+function getLastWeekEveryDay(id) {
+    $.ajax({
+            type: "GET",
+            url: "/getLastWeekEveryDay",
+            // async: false,
+            success: function (result) {
+               // alert(id)
+                drawLastWeek(id,result)
+            }
+        }
+    )
+}
 function drawLastWeekConstitute(id,lastWeekValue) {
     var myChart = echarts.init(document.getElementById(id));
     // var lastWeekValue = getLastWeekConstitute()
+    console.log(lastWeekValue);
     var data = {
         legendData: ['专注时间', '非专注时间'],
         seriesData: [
@@ -171,7 +192,7 @@ function getLastWeekConstitute(id) {
     // alert("getLastWeek")
     $.ajax({
             type: "GET",
-            url: "/getLastWeek",
+            url: "/getLastWeekEEGTime",
             // async: false,
             success: function (result) {
                 // alert(1)

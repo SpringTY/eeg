@@ -13,6 +13,16 @@ import java.util.List;
 public class LearnStateDao {
     @Autowired
     LearnstateMapper learnstateMapper;
+
+    public List<Learnstate> getLearnStateByIdAndYear(Integer userId,Date start,Date end) {
+        LearnstateExample learnstateExample = new LearnstateExample();
+        LearnstateExample.Criteria criteria = learnstateExample.createCriteria();
+        criteria.andUseridEqualTo(userId);
+        criteria.andLearndateBetween(start,end);
+        List<Learnstate> learnstates = learnstateMapper.selectByExample(learnstateExample);
+        return learnstates;
+    }
+
     public List<Learnstate> getLearnStateBetweenDate(Integer UserId, Date start, Date end){
         LearnstateExample learnstateExample = new LearnstateExample();
         LearnstateExample.Criteria criteria = learnstateExample.createCriteria();
