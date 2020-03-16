@@ -58,8 +58,8 @@
 
                     <nav class="breadcrumb-one" aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="javascript:void(0);">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page"><span>Sales</span></li>
+                            <li class="breadcrumb-item"><a href="javascript:void(0);">EEG 文件</a></li>
+<!--                            <li class="breadcrumb-item active" aria-current="page"><span>Sales</span></li>-->
                         </ol>
                     </nav>
 
@@ -113,12 +113,12 @@
                             <table id="zero-config" class="table table-hover" style="width:100%">
                                 <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th class="no-content"></th>
+                                    <th>文件号</th>
+                                    <th>上传时间</th>
+                                    <th>是否完成分析</th>
+                                    <th>总时间</th>
+                                    <th>专注时间</th>
+                                    <th class="no-content" ></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -159,35 +159,26 @@
     var data = null
     $.ajax({
             type: "GET",
-            url: "testA",
+            url: "/getFileList",
             async: false,
             success: function (result) {
                 data = result
             }
         }
     )
+    for (let i = 0; i < data.length; i++) {
+        if(data[i]['analysised']==1){
+            data[i]['analysised'] = "是"
+        }else{
+            data[i]['analysised'] = '否'
+        }
+        var date_str = data[i]['uploaddate'].substring(0,10)
+        var time_str = data[i]['uploaddate'].substring(11,16)
+        data[i]['uploaddate']  =date_str +' '+time_str
+    }
     console.log(data)
-    // $('#zero-config').DataTable({
-    //         data: data,
-    //         //使用对象数组，一定要配置columns，告诉 DataTables 每列对应的属性
-    //         //data 这里是固定不变的，name，position，salary，office 为你数据里对应的属性
-    //         columns: [
-    //             {data: 'one'},
-    //             {data: 'two'},
-    //             {data: 'three'},
-    //             {data: 'four'},
-    //             {data: 'five'}
-    //         ],
-    //         oLanguage: {
-    //             sPrevious: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
-    //             "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>',
-    //             sInfo: "Showing page _PAGE_ of _PAGES_",
-    //             sSearchPlaceholder: "Search...",
-    //             sLengthMenu: "Results :  _MENU_",
-    //         },
-    //         lengthMenu: [7, 10, 20, 50],
-    //     }
-    // )
+
+    //alert('on')
     $('#zero-config').DataTable({
         "oLanguage": {
             "oPaginate": {
@@ -206,11 +197,11 @@
         "pageLength": 7,
         'data': data,
         'columns': [
-            {data: 'one'},
-            {data: 'two'},
-            {data: 'three'},
-            {data: 'four'},
-            {data: 'five'},
+            {data: 'fileid'},
+            {data: 'uploaddate'},
+            {data: 'analysised'},
+            {data: 'totaltime'},
+            {data: 'attentiontime'},
             {data: null},
 
         ],
@@ -218,12 +209,13 @@
             //   指定第最后一列
             targets: 5,
             render: function (data, type, row, meta) {
-                return '<a type="button" onclick="del(' + row['one'] + ')" >删除</a>';
+                return '<a type="button" class="btn btn-primary"  onclick="del(' + row['FileId'] + ')" >详细</a>';
             }
         }]
     });
 
     function del(id) {
+        window.open('/EEGFile/'+id)
         alert(id)
         console.log(id);
     }

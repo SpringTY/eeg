@@ -113,11 +113,11 @@
                             <table id="zero-config" class="table table-hover" style="width:100%">
                                 <thead>
                                 <tr>
-                                    <th>文件号</th>
-                                    <th>上传时间</th>
-                                    <th>是否完成分析</th>
-                                    <th>总时间</th>
-                                    <th>专注时间</th>
+                                    <th>文章号</th>
+                                    <th>文章名</th>
+                                    <th>上传日期</th>
+                                    <th>更改日期</th>
+                                    <th>权限信息</th>
                                     <th class="no-content" ></th>
                                 </tr>
                                 </thead>
@@ -159,24 +159,13 @@
     var data = null
     $.ajax({
             type: "GET",
-            url: "/getFileList",
+            url: "/getArticleList",
             async: false,
             success: function (result) {
                 data = result
             }
         }
     )
-    for (let i = 0; i < data.length; i++) {
-        if(data[i]['analysised']==1){
-            data[i]['analysised'] = "是"
-        }else{
-            data[i]['analysised'] = '否'
-        }
-        var date_str = data[i]['uploaddate'].substring(0,10)
-        var time_str = data[i]['uploaddate'].substring(11,16)
-        data[i]['uploaddate']  =date_str +' '+time_str
-    }
-    console.log(data)
 
     //alert('on')
     $('#zero-config').DataTable({
