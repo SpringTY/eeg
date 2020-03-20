@@ -1,0 +1,252 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:v-on="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <link rel="stylesheet" type="text/css" href="../plugins/table/datatable/datatables.css">
+    <link rel="stylesheet" type="text/css" href="../plugins/table/datatable/custom_dt_miscellaneous.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/forms/theme-checkbox-radio.css">
+    <link rel="stylesheet" type="text/css" href="../plugins/table/datatable/dt-global_style.css">
+    <!-- END PAGE LEVEL STYLES -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <title>阅读专注度分析 </title>
+    <!--js and css-->
+    <div th:replace="common/cssAndJavascript :: staticResouces"></div>
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/plugins.css" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+
+
+
+
+    <!--  BEGIN CUSTOM STYLE FILE  -->
+    <link href="../assets/css/scrollspyNav.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../plugins/editors/quill/quill.snow.css">
+    <!--  END CUSTOM STYLE FILE  -->
+</head>
+<!-- BEGIN PAGE LEVEL STYLES -->
+<link rel="stylesheet" type="text/css" href="plugins/table/datatable/datatables.css">
+<link rel="stylesheet" type="text/css" href="plugins/table/datatable/dt-global_style.css">
+<!-- END PAGE LEVEL STYLES -->
+<body>
+<!-- BEGIN LOADER -->
+<div id="load_screen">
+    <div class="loader">
+        <div class="loader-content">
+            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                 xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 792 723"
+                 style="enable-background:new 0 0 792 723;" xml:space="preserve"> <g> <g> <path class="st0"
+                                                                                                d="M213.9,584.4c-47.4-25.5-84.7-60.8-111.8-106.1C75,433.1,61.4,382,61.4,324.9c0-57,13.6-108.1,40.7-153.3 S166.5,91,213.9,65.5s100.7-38.2,159.9-38.2c49.9,0,95,8.8,135.3,26.3s74.1,42.8,101.5,75.7l-85.5,78.9 c-38.9-44.9-87.2-67.4-144.7-67.4c-35.6,0-67.4,7.8-95.4,23.4s-49.7,37.4-65.4,65.4c-15.6,28-23.4,59.8-23.4,95.4 s7.8,67.4,23.4,95.4s37.4,49.7,65.4,65.4c28,15.6,59.7,23.4,95.4,23.4c57.6,0,105.8-22.7,144.7-68.2l85.5,78.9 c-27.4,33.4-61.4,58.9-102,76.5c-40.6,17.5-85.8,26.3-135.7,26.3C314.3,622.7,261.3,809.9,213.9,584.4z"/> </g>
+                <circle class="st1" cx="375.4" cy="322.9" r="100"/> </g>
+                <g> <circle class="st2" cx="275.4" cy="910" r="65"></circle>
+                    <circle class="st4" cx="475.4" cy="910" r="65"></circle> </g> </svg>
+        </div>
+    </div>
+</div>
+<!--  END LOADER -->
+
+<!--  BEGIN NAVBAR  -->
+<div class="header-container fixed-top">
+    <div th:replace="common/htmlCommon:: header"></div>
+</div>
+<!--  END NAVBAR  -->
+
+<!--头表栏-->
+<!--  BEGIN NAVBAR  -->
+<div class="sub-header-container">
+    <header class="header navbar navbar-expand-sm">
+        <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 class="feather feather-menu">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </a>
+
+        <ul class="navbar-nav flex-row">
+            <li>
+                <div class="page-header">
+
+                    <nav class="breadcrumb-one" aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javascript:void(0);">手记</a></li>
+                            <li class="breadcrumb-item active" aria-current="page"><span>写手记</span></li>
+                        </ol>
+                    </nav>
+
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav flex-row ml-auto ">
+            <li class="nav-item more-dropdown">
+                <div class="dropdown  custom-dropdown-icon">
+                    <a class="dropdown-toggle btn" href="#" role="button" id="customDropdown" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false"><span>Settings</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="feather feather-chevron-down">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="customDropdown">
+                        <a class="dropdown-item" data-value="Settings" href="javascript:void(0);">Settings</a>
+                        <a class="dropdown-item" data-value="Mail" href="javascript:void(0);">Mail</a>
+                        <a class="dropdown-item" data-value="Print" href="javascript:void(0);">Print</a>
+                        <a class="dropdown-item" data-value="Download" href="javascript:void(0);">Download</a>
+                        <a class="dropdown-item" data-value="Share" href="javascript:void(0);">Share</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </header>
+</div>
+<!--  END NAVBAR  -->
+
+<!-- 侧边栏-->
+<!--  BEGIN MAIN CONTAINER  -->
+<div class="main-container" id="container">
+
+    <div class="overlay"></div>
+    <div class="search-overlay"></div>
+    <div th:replace="common/htmlCommon :: sideNavBar">
+
+    </div>
+
+    <!--  内容区域  -->
+    <!--  BEGIN CONTENT AREA  -->
+    <div id="content" class="main-content">
+        <div class="container">
+            <div class="row layout-px-spacing layout-top-spacing" id="input_condition">
+                <form action="/searchUsers" method="post">
+                    <div class="form-group mb-4">
+                        <label for="username">用户名</label>
+                        <input type="text" class="form-control" name="userName" id="userName" placeholder="在此键入用户名">
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="userPhone">手机号</label>
+                        <input type="text" class="form-control" name="userPhone" id="userPhone" placeholder="在此键入手机号">
+                    </div>
+                    <button class="btn btn-primary" type="submit">搜索</button>
+                </form>
+            </div>
+            <div class="row">
+
+
+            <div class="layout-px-spacing "  id="form_1">
+
+                <div class="row layout-spacing layout-top-spacing">
+                    <div class="col-lg-12">
+                        <div class="statbox widget box box-shadow">
+                            <div class="widget-header">
+                                <div class="row">
+                                    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                        <h4>Column Filter</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget-content widget-content-area">
+                                <div class="table-responsive mb-4">
+                                    <table id="column-filter" class="table">
+                                        <thead>
+                                        <tr>
+                                            <th class="checkbox-column"> Record No. </th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Email</th>
+                                            <th>Status</th>
+                                            <th class="text-center">Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="checkbox-column"> 1 </td>
+                                            <td>John</td>
+                                            <td>Doe</td>
+                                            <td>johndoe@yahoo.com</td>
+                                            <td><span class="shadow-none badge badge-primary">Approved</span></td>
+                                            <td class="text-center"><button class="btn btn-outline-primary">View</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="checkbox-column"> 2 </td>
+                                            <td>Andy</td>
+                                            <td>King</td>
+                                            <td>andyking@gmail.com</td>
+                                            <td><span class="shadow-none badge badge-warning">Pending</span></td>
+                                            <td class="text-center"><button class="btn btn-outline-primary">View</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="checkbox-column"> 3 </td>
+                                            <td>Lisa</td>
+                                            <td>Doe</td>
+                                            <td>lisadoe@live.com</td>
+                                            <td><span class="shadow-none badge badge-danger">Suspended</span></td>
+                                            <td class="text-center"><button class="btn btn-outline-primary">View</button></td>
+                                        </tr>
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <th class="checkbox-column"></th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Email</th>
+                                            <th>Status</th>
+                                            <th></th>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            </div>
+        </div>
+
+    </div>
+    <!--  END CONTENT AREA  -->
+
+</div>
+<!-- END MAIN CONTAINER -->
+
+
+<script th:inline="javascript">
+    // alert([[${mass}]])
+    // in this init var insert for state
+</script>
+<!--<script src="../assets/js/echarts.js"></script>-->
+
+<!--<script src="../assets/js/config.js"></script>-->
+<div th:replace="common/cssAndJavascript :: jsCode"></div>
+<script src="../assets/js/libs/jquery-3.1.1.min.js"></script>
+<script src="../bootstrap/js/popper.min.js"></script>
+<script src="../bootstrap/js/bootstrap.min.js"></script>
+<script src="../plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script src="../assets/js/app.js"></script>
+<script src="../plugins/highlight/highlight.pack.js"></script>
+<script src="../assets/js/custom.js"></script>
+<!-- END GLOBAL MANDATORY SCRIPTS -->
+
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script src="../assets/js/scrollspyNav.js"></script>
+<!-- END PAGE LEVEL SCRIPTS -->
+
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script src="../plugins/table/datatable/datatables.js"></script>
+<script src="../plugins/table/datatable/custom_miscellaneous.js"></script>
+</body>
+</html>

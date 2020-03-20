@@ -13,8 +13,6 @@ spring:
     initialSize: 5
     minIdle: 5
     maxActive: 20
-    maxWait: 60000
-    timeBetweenEvictionRunsMillis: 60000
 mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

@@ -1,5 +1,6 @@
 package com.spring.eeg;
 
+import com.spring.eeg.Dao.ArticleDao;
 import com.spring.eeg.Dao.UserLoginDao;
 import com.spring.eeg.mbg.dao.EegfilelistMapper;
 import com.spring.eeg.mbg.dao.UserloginMapper;
@@ -28,7 +29,8 @@ class EegApplicationTests {
     EegfilelistMapper eegfilelistMapper;
     @Autowired
     EEGStatisticService eegStatisticService;
-
+    @Autowired
+    ArticleDao articleDao;
     @Test
     void contextLoads() {
 //        UserloginExample userloginExample = new UserloginExample();
@@ -41,13 +43,11 @@ class EegApplicationTests {
 //        String encode = new BCryptPasswordEncoder().encode("1");
 //        System.out.println(encode);
 //        System.out.println(userLoginByPhone);
-        List<Eegfilelist> eegfilelists = eegfilelistMapper.selectByExample(new EegfilelistExample());
-        System.out.println(eegfilelists);
     }
     @Test
     void testEEGLastWeek(){
 //        System.out.println(1);
 //        Userlastweekstate lastWeekState = eegStatisticService.getLastWeekState(10);
-        System.out.println(LocalDate.now().getYear());
+        System.out.println(LocalDate.now());
     }
 }

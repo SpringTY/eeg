@@ -166,7 +166,16 @@
             }
         }
     )
-
+    for (let i = 0; i < data.length; i++) {
+        if(data[i].authority == 'public'){
+            data[i].authority = '所有人可见'
+        }else if(data[i].authority == 'friends'){
+            data[i].authority = '仅好友可见'
+        }else{
+            data[i].authority = '仅自己可见'
+        }
+        console.log('on')
+    }
     //alert('on')
     $('#zero-config').DataTable({
         "oLanguage": {
@@ -186,27 +195,24 @@
         "pageLength": 7,
         'data': data,
         'columns': [
-            {data: 'fileid'},
+            {data: 'articleid'},
+            {data: 'articlename'},
+            {data: 'updatedate'},
             {data: 'uploaddate'},
-            {data: 'analysised'},
-            {data: 'totaltime'},
-            {data: 'attentiontime'},
+            {data: 'authority'},
             {data: null},
-
         ],
         columnDefs: [{
             //   指定第最后一列
             targets: 5,
             render: function (data, type, row, meta) {
-                return '<a type="button" class="btn btn-primary"  onclick="del(' + row['FileId'] + ')" >详细</a>';
+                return '<a type="button" class="btn btn-primary"  onclick="detail(' + row['articleid'] + ')" >详细</a>';
             }
         }]
     });
 
-    function del(id) {
-        window.open('/EEGFile/'+id)
-        alert(id)
-        console.log(id);
+    function detail(id) {
+        window.location.href ='/article/'+id
     }
 </script>
 

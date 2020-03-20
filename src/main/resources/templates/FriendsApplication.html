@@ -59,7 +59,7 @@
                     <nav class="breadcrumb-one" aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="javascript:void(0);">EEG 文件</a></li>
-<!--                            <li class="breadcrumb-item active" aria-current="page"><span>Sales</span></li>-->
+                            <!--                            <li class="breadcrumb-item active" aria-current="page"><span>Sales</span></li>-->
                         </ol>
                     </nav>
 
@@ -113,11 +113,12 @@
                             <table id="zero-config" class="table table-hover" style="width:100%">
                                 <thead>
                                 <tr>
-                                    <th>文章号</th>
-                                    <th>文章名</th>
-                                    <th>上传日期</th>
-                                    <th>更改日期</th>
-                                    <th>权限信息</th>
+                                    <th>用户名</th>
+                                    <th>Email</th>
+                                    <th>手机号</th>
+                                    <th>性别</th>
+                                    <th>地区</th>
+                                    <th class="no-content" ></th>
                                     <th class="no-content" ></th>
                                 </tr>
                                 </thead>
@@ -155,27 +156,8 @@
 <div th:replace="common/cssAndJavascript :: jsCode"></div>
 
 <script src="../plugins/table/datatable/datatables.js"></script>
-<script>
-    var data = null
-    $.ajax({
-            type: "GET",
-            url: "/getArticleList",
-            async: false,
-            success: function (result) {
-                data = result
-            }
-        }
-    )
-    for (let i = 0; i < data.length; i++) {
-        if(data[i].authority == 'public'){
-            data[i].authority = '所有人可见'
-        }else if(data[i].authority == 'friends'){
-            data[i].authority = '仅好友可见'
-        }else{
-            data[i].authority = '仅自己可见'
-        }
-        console.log('on')
-    }
+<script th:inline="javascript">
+    var data = [[${friends}]]
     //alert('on')
     $('#zero-config').DataTable({
         "oLanguage": {
@@ -195,22 +177,54 @@
         "pageLength": 7,
         'data': data,
         'columns': [
-            {data: 'articleid'},
-            {data: 'articlename'},
-            {data: 'updatedate'},
-            {data: 'uploaddate'},
-            {data: 'authority'},
+            {data: 'username'},
+            {data: 'useremail'},
+            {data: 'userphone'},
+            {data: 'usersex'},
+            {data: 'useraddress'},
+            {data: null},
             {data: null},
         ],
-        columnDefs: [{
-            //   指定第最后一列
-            targets: 5,
-            render: function (data, type, row, meta) {
-                return '<a type="button" class="btn btn-primary"  onclick="detail(' + row['articleid'] + ')" >详细</a>';
+        columnDefs: [
+            {
+                //   指定第最后一列
+                targets: 5,
+                render: function (data, type, row, meta) {
+                    return '<span class="shadow-none badge badge-primary" onclick="apply(' + row['userphone'] + ')">Approved</span>';
+                }
             }
-        }]
+            // ,
+            // {
+            //     //   指定第最后一列
+            //     targets: 5,
+            //     render: function (data, type, row, meta) {
+            //         return '<span class="shadow-none badge badge-primary" onclick="approve(' + row['userphone'] + ')">Approved</span>';
+            //     }
+            // },{
+            //     //   指定第最后一列
+            //     targets: 6,
+            //     render: function (data, type, row, meta) {
+            //         return '<span class="shadow-none badge badge-danger" onclick="reject(' + row['userphone'] + ')">Reject</span>';
+            //     }
+            // }
+        ]
     });
+    function apply(userPhone) {
+        console.log(userPhone);
+        if(confirm("确认发出申请?")){
+            console.log("1")
+        }else{
 
+        }
+    }
+    function reject(userPhone) {
+        console.log(userPhone);
+        if(confirm("拒绝加此人吗?")){
+            console.log("3")
+        }else{
+
+        }
+    }
     function detail(id) {
         window.location.href ='/article/'+id
     }
