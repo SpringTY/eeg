@@ -23,7 +23,13 @@ public class UserLoginDao {
         }
         return userlogins.get(0);
     }
-
+    public List<Userlogin> getUserByUserId(List<Integer> UserId) {
+        UserloginExample userloginExample = new UserloginExample();
+        UserloginExample.Criteria criteria = userloginExample.createCriteria();
+        criteria.andUseridIn(UserId);
+        List<Userlogin> userlogins = userloginMapper.selectByExample(userloginExample);
+        return userlogins;
+    }
     public Integer insertUserLogin(Userlogin userLogin) {
         return userloginMapper.insertSelective(userLogin);
     }

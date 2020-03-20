@@ -198,7 +198,7 @@
         var reason = prompt("请填写验证消息");
         if(reason){
             //填写内容并“确定”
-            alert(reason)
+            // alert(reason)
             $.ajax({
                 type: "POST",
                 url: "/applyFriends",
@@ -208,8 +208,13 @@
                 },
                 dataType: "JSON",
                 success:function (result) {
-                    alert(result)
-                    alert("已发出申请")
+                    console.log(result);
+                    if(result == true){
+                        alert("已发出申请")
+                    }else{
+                        alert("错误")
+                    }
+
                 }
             });
         }

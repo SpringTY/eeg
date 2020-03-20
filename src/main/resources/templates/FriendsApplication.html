@@ -116,8 +116,7 @@
                                     <th>用户名</th>
                                     <th>Email</th>
                                     <th>手机号</th>
-                                    <th>性别</th>
-                                    <th>地区</th>
+                                    <th>验证消息</th>
                                     <th class="no-content" ></th>
                                     <th class="no-content" ></th>
                                 </tr>
@@ -180,39 +179,38 @@
             {data: 'username'},
             {data: 'useremail'},
             {data: 'userphone'},
-            {data: 'usersex'},
-            {data: 'useraddress'},
+            {data: 'usermassage'},
             {data: null},
             {data: null},
         ],
         columnDefs: [
             {
                 //   指定第最后一列
+                targets: 4,
+                render: function (data, type, row, meta) {
+                    return '<span class="shadow-none badge badge-primary" onclick="approve(' + row['userphone'] + ')">Approved</span>';
+                }
+            },{
+                //   指定第最后一列
                 targets: 5,
                 render: function (data, type, row, meta) {
-                    return '<span class="shadow-none badge badge-primary" onclick="apply(' + row['userphone'] + ')">Approved</span>';
+                    return '<span class="shadow-none badge badge-danger" onclick="reject(' + row['userphone'] + ')">Reject</span>';
                 }
             }
-            // ,
-            // {
-            //     //   指定第最后一列
-            //     targets: 5,
-            //     render: function (data, type, row, meta) {
-            //         return '<span class="shadow-none badge badge-primary" onclick="approve(' + row['userphone'] + ')">Approved</span>';
-            //     }
-            // },{
-            //     //   指定第最后一列
-            //     targets: 6,
-            //     render: function (data, type, row, meta) {
-            //         return '<span class="shadow-none badge badge-danger" onclick="reject(' + row['userphone'] + ')">Reject</span>';
-            //     }
-            // }
         ]
     });
-    function apply(userPhone) {
+    function approve(userPhone) {
         console.log(userPhone);
-        if(confirm("确认发出申请?")){
-            console.log("1")
+        if(confirm("同意?")){
+            $.ajax({
+                type: "POST",
+                url: "/ApproveFriendApply",
+                data: {
+                    userPhone: userPhone,
+                },
+                dataType: "JSON",
+            });
+            console.log("添加成功")
         }else{
 
         }
@@ -220,7 +218,15 @@
     function reject(userPhone) {
         console.log(userPhone);
         if(confirm("拒绝加此人吗?")){
-            console.log("3")
+            $.ajax({
+                type: "POST",
+                url: "/RejectFriendApply",
+                data: {
+                    userPhone: userPhone,
+                },
+                dataType: "JSON",
+            });
+            alert("拒绝成功")
         }else{
 
         }

@@ -2,6 +2,7 @@ package com.spring.eeg.controller;
 
 import com.spring.eeg.Model.ArticleJson;
 import com.spring.eeg.Model.User;
+import com.spring.eeg.Model.UserApplication;
 import com.spring.eeg.mbg.model.Articleview;
 import com.spring.eeg.mbg.model.Userlogin;
 import com.spring.eeg.service.SocialService;
@@ -95,5 +96,27 @@ public class SocialController {
         Boolean result = socialService.addFriendApplication(user, userPhone, massage);
         return result;
     }
+    @RequestMapping(value = "/ApplicationList")
+    public String ApplicationList(Map<String,Object> map){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<UserApplication> fromTos = socialService.getUserFromByUserTo(user);
+        map.put("friends",fromTos);
+        return "FriendsApplication.html";
+    }
+    @RequestMapping(value = "/ApproveFriendApply")
+    @ResponseBody
+    public String approveFriendApply(@RequestParam ("userPhone") String userPhone){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        socialService.approveFriendApply(user.getUserid(),userPhone);
 
+        return "FriendsApplication.html";
+    }
+    @RequestMapping(value = "/RejectFriendApply")
+    @ResponseBody
+    public String rejectFriendApply(@RequestParam ("userPhone") String userPhone){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        socialService.rejectFriendApply(user.getUserid(),userPhone);
+
+        return "FriendsApplication.html";
+    }
 }
