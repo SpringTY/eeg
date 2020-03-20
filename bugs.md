@@ -16,3 +16,10 @@
 
 #### 4. MBG 操作
 https://blog.csdn.net/fly_fly_fly_pig/article/details/81592432 
+
+mbg 发生过一次错误 是由于第一次连接数据库比较慢,导致运行两次generator
+然后xml文件是追加形式 所以xml 中有两个id相同的方法
+发生错误为 mybatis 绑定错误
+然后如果把文件夹移动到mapper 文件夹会让mapper bean无法生成
+导致其他mapper bean 也不行
+解决与预防建议 在其他project生成mapper文件 复制到目标工程

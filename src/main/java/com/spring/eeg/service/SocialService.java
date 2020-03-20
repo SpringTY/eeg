@@ -1,6 +1,7 @@
 package com.spring.eeg.service;
 
 import com.spring.eeg.Dao.ArticleDao;
+import com.spring.eeg.Dao.FriendApplicationDao;
 import com.spring.eeg.Dao.UserLoginDao;
 import com.spring.eeg.Model.ArticleJson;
 import com.spring.eeg.Model.User;
@@ -24,6 +25,8 @@ public class SocialService {
     ArticleDao articleDao;
     @Autowired
     UserLoginDao userLoginDao;
+    @Autowired
+    FriendApplicationDao friendApplicationDao;
     /**
      *  插入 存在覆盖
      * @param article
@@ -107,15 +110,19 @@ public class SocialService {
         return articleDao.getArticleViews(userId);
     }
 
-    public void addFriendApplication(User userFrom, String userPhone,String massage) {
+    public Boolean addFriendApplication(User userFrom, String userPhone,String massage) {
         Userlogin userTo = userLoginDao.getUserLoginByPhone(userPhone);
         Integer userToId = userTo.getUserid();
+        if(userToId.equals(userFrom.getUserid())){
+            return false;
+        }
         Friendapplication friendapplication = new Friendapplication();
         friendapplication.setMessage(massage);
         friendapplication.setState("waiting");
         friendapplication.setUserfrom(userFrom.getUserid());
         friendapplication.setUserto(userToId);
         friendapplication.setStartdate(new Date());
-        
+        friendApplicationDao.insert(friendapplication);
+        return true;
     }
 }

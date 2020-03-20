@@ -88,12 +88,12 @@ public class SocialController {
     }
     @RequestMapping(value = "/applyFriends")
     @ResponseBody
-    public String applyFriends(@RequestParam ("userPhone") String userPhone,
+    public Boolean applyFriends(@RequestParam ("userPhone") String userPhone,
                                @RequestParam ("reason") String massage){
         log.info(userPhone); User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        socialService.addFriendApplication(user,userPhone,massage);
-        return "success";
+        Boolean result = socialService.addFriendApplication(user, userPhone, massage);
+        return result;
     }
 
 }
