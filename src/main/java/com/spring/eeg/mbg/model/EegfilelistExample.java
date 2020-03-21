@@ -561,6 +561,206 @@ public class EegfilelistExample {
             addCriterion("attentionTime not between", value1, value2, "attentiontime");
             return (Criteria) this;
         }
+
+        public Criteria andPlanidIsNull() {
+            addCriterion("planId is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlanidIsNotNull() {
+            addCriterion("planId is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlanidEqualTo(Integer value) {
+            addCriterion("planId =", value, "planid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlanidNotEqualTo(Integer value) {
+            addCriterion("planId <>", value, "planid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlanidGreaterThan(Integer value) {
+            addCriterion("planId >", value, "planid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlanidGreaterThanOrEqualTo(Integer value) {
+            addCriterion("planId >=", value, "planid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlanidLessThan(Integer value) {
+            addCriterion("planId <", value, "planid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlanidLessThanOrEqualTo(Integer value) {
+            addCriterion("planId <=", value, "planid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlanidIn(List<Integer> values) {
+            addCriterion("planId in", values, "planid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlanidNotIn(List<Integer> values) {
+            addCriterion("planId not in", values, "planid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlanidBetween(Integer value1, Integer value2) {
+            addCriterion("planId between", value1, value2, "planid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlanidNotBetween(Integer value1, Integer value2) {
+            addCriterion("planId not between", value1, value2, "planid");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteIsNull() {
+            addCriterion("note is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteIsNotNull() {
+            addCriterion("note is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteEqualTo(String value) {
+            addCriterion("note =", value, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteNotEqualTo(String value) {
+            addCriterion("note <>", value, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteGreaterThan(String value) {
+            addCriterion("note >", value, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteGreaterThanOrEqualTo(String value) {
+            addCriterion("note >=", value, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteLessThan(String value) {
+            addCriterion("note <", value, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteLessThanOrEqualTo(String value) {
+            addCriterion("note <=", value, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteLike(String value) {
+            addCriterion("note like", value, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteNotLike(String value) {
+            addCriterion("note not like", value, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteIn(List<String> values) {
+            addCriterion("note in", values, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteNotIn(List<String> values) {
+            addCriterion("note not in", values, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteBetween(String value1, String value2) {
+            addCriterion("note between", value1, value2, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteNotBetween(String value1, String value2) {
+            addCriterion("note not between", value1, value2, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andInfoIsNull() {
+            addCriterion("info is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInfoIsNotNull() {
+            addCriterion("info is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInfoEqualTo(String value) {
+            addCriterion("info =", value, "info");
+            return (Criteria) this;
+        }
+
+        public Criteria andInfoNotEqualTo(String value) {
+            addCriterion("info <>", value, "info");
+            return (Criteria) this;
+        }
+
+        public Criteria andInfoGreaterThan(String value) {
+            addCriterion("info >", value, "info");
+            return (Criteria) this;
+        }
+
+        public Criteria andInfoGreaterThanOrEqualTo(String value) {
+            addCriterion("info >=", value, "info");
+            return (Criteria) this;
+        }
+
+        public Criteria andInfoLessThan(String value) {
+            addCriterion("info <", value, "info");
+            return (Criteria) this;
+        }
+
+        public Criteria andInfoLessThanOrEqualTo(String value) {
+            addCriterion("info <=", value, "info");
+            return (Criteria) this;
+        }
+
+        public Criteria andInfoLike(String value) {
+            addCriterion("info like", value, "info");
+            return (Criteria) this;
+        }
+
+        public Criteria andInfoNotLike(String value) {
+            addCriterion("info not like", value, "info");
+            return (Criteria) this;
+        }
+
+        public Criteria andInfoIn(List<String> values) {
+            addCriterion("info in", values, "info");
+            return (Criteria) this;
+        }
+
+        public Criteria andInfoNotIn(List<String> values) {
+            addCriterion("info not in", values, "info");
+            return (Criteria) this;
+        }
+
+        public Criteria andInfoBetween(String value1, String value2) {
+            addCriterion("info between", value1, value2, "info");
+            return (Criteria) this;
+        }
+
+        public Criteria andInfoNotBetween(String value1, String value2) {
+            addCriterion("info not between", value1, value2, "info");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

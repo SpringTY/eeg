@@ -17,6 +17,12 @@ public class Eegfilelist {
 
     private Integer attentiontime;
 
+    private Integer planid;
+
+    private String note;
+
+    private String info;
+
     public Integer getFileid() {
         return fileid;
     }
@@ -71,5 +77,29 @@ public class Eegfilelist {
 
     public void setAttentiontime(Integer attentiontime) {
         this.attentiontime = attentiontime;
+    }
+
+    public Integer getPlanid() {
+        return planid;
+    }
+
+    public void setPlanid(Integer planid) {
+        this.planid = planid;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note == null ? null : note.trim();
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info == null ? null : info.trim();
     }
 }

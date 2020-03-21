@@ -9,6 +9,9 @@
     <result column="analysised" jdbcType="INTEGER" property="analysised" />
     <result column="totalTime" jdbcType="INTEGER" property="totaltime" />
     <result column="attentionTime" jdbcType="INTEGER" property="attentiontime" />
+    <result column="planId" jdbcType="INTEGER" property="planid" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+    <result column="info" jdbcType="VARCHAR" property="info" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,7 +72,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    fileId, userId, filePath, uploadDate, analysised, totalTime, attentionTime
+    fileId, userId, filePath, uploadDate, analysised, totalTime, attentionTime, planId, 
+    note, info
   </sql>
   <select id="selectByExample" parameterType="com.spring.eeg.mbg.model.EegfilelistExample" resultMap="BaseResultMap">
     select
@@ -104,10 +108,12 @@
   <insert id="insert" parameterType="com.spring.eeg.mbg.model.Eegfilelist">
     insert into eegFileList (fileId, userId, filePath, 
       uploadDate, analysised, totalTime, 
-      attentionTime)
+      attentionTime, planId, note, 
+      info)
     values (#{fileid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{filepath,jdbcType=VARCHAR}, 
       #{uploaddate,jdbcType=DATE}, #{analysised,jdbcType=INTEGER}, #{totaltime,jdbcType=INTEGER}, 
-      #{attentiontime,jdbcType=INTEGER})
+      #{attentiontime,jdbcType=INTEGER}, #{planid,jdbcType=INTEGER}, #{note,jdbcType=VARCHAR}, 
+      #{info,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.spring.eeg.mbg.model.Eegfilelist">
     insert into eegFileList
@@ -133,6 +139,15 @@
       <if test="attentiontime != null">
         attentionTime,
       </if>
+      <if test="planid != null">
+        planId,
+      </if>
+      <if test="note != null">
+        note,
+      </if>
+      <if test="info != null">
+        info,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="fileid != null">
@@ -155,6 +170,15 @@
       </if>
       <if test="attentiontime != null">
         #{attentiontime,jdbcType=INTEGER},
+      </if>
+      <if test="planid != null">
+        #{planid,jdbcType=INTEGER},
+      </if>
+      <if test="note != null">
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null">
+        #{info,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -188,6 +212,15 @@
       <if test="record.attentiontime != null">
         attentionTime = #{record.attentiontime,jdbcType=INTEGER},
       </if>
+      <if test="record.planid != null">
+        planId = #{record.planid,jdbcType=INTEGER},
+      </if>
+      <if test="record.note != null">
+        note = #{record.note,jdbcType=VARCHAR},
+      </if>
+      <if test="record.info != null">
+        info = #{record.info,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -201,7 +234,10 @@
       uploadDate = #{record.uploaddate,jdbcType=DATE},
       analysised = #{record.analysised,jdbcType=INTEGER},
       totalTime = #{record.totaltime,jdbcType=INTEGER},
-      attentionTime = #{record.attentiontime,jdbcType=INTEGER}
+      attentionTime = #{record.attentiontime,jdbcType=INTEGER},
+      planId = #{record.planid,jdbcType=INTEGER},
+      note = #{record.note,jdbcType=VARCHAR},
+      info = #{record.info,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -227,6 +263,15 @@
       <if test="attentiontime != null">
         attentionTime = #{attentiontime,jdbcType=INTEGER},
       </if>
+      <if test="planid != null">
+        planId = #{planid,jdbcType=INTEGER},
+      </if>
+      <if test="note != null">
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null">
+        info = #{info,jdbcType=VARCHAR},
+      </if>
     </set>
     where fileId = #{fileid,jdbcType=INTEGER}
   </update>
@@ -237,7 +282,10 @@
       uploadDate = #{uploaddate,jdbcType=DATE},
       analysised = #{analysised,jdbcType=INTEGER},
       totalTime = #{totaltime,jdbcType=INTEGER},
-      attentionTime = #{attentiontime,jdbcType=INTEGER}
+      attentionTime = #{attentiontime,jdbcType=INTEGER},
+      planId = #{planid,jdbcType=INTEGER},
+      note = #{note,jdbcType=VARCHAR},
+      info = #{info,jdbcType=VARCHAR}
     where fileId = #{fileid,jdbcType=INTEGER}
   </update>
 </mapper>
