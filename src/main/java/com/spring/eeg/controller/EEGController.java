@@ -10,11 +10,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
 @Slf4j
 @Controller
 public class EEGController {
@@ -53,5 +57,35 @@ public class EEGController {
 
         return null;
     }
+    @RequestMapping(value = "/document")
+    public String document(Map<String, Object> map){
+        System.out.println("/document + TAG");
+        return "document.html";
+    }
+    @RequestMapping(value = "/newEEGFile")
+    public String newEEGFile(){
 
+        return "newEEGFile.html";
+    }
+    @RequestMapping(value = "/uploadEEGFile")
+    @ResponseBody
+    public String uploadEEGFile(@RequestParam("planId") Integer planId,
+                                @RequestParam("fileTitle") String fileTitle,
+
+                                @RequestParam("uploadDate") String uploadDate,
+                                @RequestParam("info") String info
+            ,
+                                @RequestParam("EEGFile") MultipartFile[] EEGFile, HttpServletRequest request
+                                ){
+        System.out.println("TAGTAG");
+        log.info(fileTitle);
+        log.info(planId.toString());
+        log.info(uploadDate.toString());
+        log.info(info.toString());
+        log.info(String.valueOf(EEGFile.length));
+        MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
+        List<MultipartFile> mutilpartFiles = multipartHttpServletRequest.getFiles("EEGFile");
+        System.out.println(mutilpartFiles);
+        return "newEEGFile.html";
+    }
 }
