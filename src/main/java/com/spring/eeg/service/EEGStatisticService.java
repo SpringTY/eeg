@@ -1,9 +1,12 @@
 package com.spring.eeg.service;
 
+import com.spring.eeg.Dao.EegFileListDao;
 import com.spring.eeg.Dao.LearnStateDao;
 import com.spring.eeg.Dao.UserLastWeekStateDao;
 import com.spring.eeg.Model.EEGTime;
+import com.spring.eeg.mbg.dao.LearnstateMapper;
 import com.spring.eeg.mbg.dao.UserlastweekstateMapper;
+import com.spring.eeg.mbg.model.Eegfilelist;
 import com.spring.eeg.mbg.model.Learnstate;
 import com.spring.eeg.mbg.model.Userlastweekstate;
 import com.spring.eeg.mbg.model.UserlastweekstateExample;
@@ -12,6 +15,7 @@ import com.spring.eeg.utils.SQLFormat;
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.swing.text.DateFormatter;
 import java.text.DateFormat;
@@ -145,6 +149,13 @@ public class EEGStatisticService {
     public List<List> getLearnStateCurrentYear(Integer userId){
         return getLearnState(userId,LocalDate.now());
     }
+
+    /**
+     * 返回给Echarts 必须是数组
+     * @param userId
+     * @param date
+     * @return
+     */
     public List<List> getLearnState(Integer userId, LocalDate date){
         LocalDate firstDayOfLastYear = date.with(TemporalAdjusters.firstDayOfYear());
         LocalDate lastDayOfLastYear = date.with(TemporalAdjusters.lastDayOfYear());
@@ -160,4 +171,32 @@ public class EEGStatisticService {
         }
         return learnStates;
     }
+
+    /**
+     * 上传记录后为 某天添加新的学习时间
+     * @param userId
+     * @param AttentionTime
+     * @param totalTime
+     * @param date
+     */
+    public void addLearnStateTime(Integer userId, Integer AttentionTime,Integer totalTime,Date date){
+        Learnstate learnstate = learnStateDao.getLearnStateByIdAndDate(userId,date);
+        if(learnstate == null){
+            learnstate = new Learnstate();
+            learnstate.setTotaltime(totalTime);
+            learnstate.setAttentiontime(AttentionTime);
+            learnstate.setUserid(userId);
+            learnstate.setLearndate(date);
+            learnStateDao.insert(learnstate);
+        }else{
+            // 计算新的时间
+            Integer previousTotalTime = learnstate.getTotaltime();
+            Integer previousAttentionTime = learnstate.getAttentiontime();
+            learnstate.setAttentiontime(previousAttentionTime + AttentionTime);
+            learnstate.setTotaltime(previousTotalTime + totalTime);
+            // 开始更新
+            learnStateDao.updateLearnStateByUserIdAndDate(learnstate);
+        }
+    }
+
 }

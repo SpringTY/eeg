@@ -53,11 +53,13 @@ public class SocialController {
         socialService.updateArticle(title,contents,authority,user.getUserid(),articleId);
         return "ok";
     }
-    @RequestMapping(value = "/getArticleList",produces="application/json;charset=UTF-8")
+    @RequestMapping(value = "/getArticleList" ,produces="application/json;charset=UTF-8")
     @ResponseBody
     public List<Articleview> getArticleList(){
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return socialService.getArticleViews(user.getUserid());
+        List<Articleview> articleViews = socialService.getArticleViews(user.getUserid());
+        log.info(articleViews.toString());
+        return articleViews;
     }
     @RequestMapping(value = "/articleList")
     public String articleList(){

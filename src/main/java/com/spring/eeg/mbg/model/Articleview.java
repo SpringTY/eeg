@@ -12,9 +12,9 @@ public class Articleview {
     private Integer articleid;
 
     private String articlename;
-    @JSONField(format = "yyyy年MM月dd日")
+    @JSONField(format = "yyyy-MM-dd")
     private Date uploaddate;
-    @JSONField(format = "yyyy年MM月dd日")
+    @JSONField(format = "yyyy-MM-dd")
     private Date updatedate;
 
     private String authority;

@@ -105,4 +105,14 @@ public class PlanService {
         }
         return true;
     }
+    public void addPlanTime(Integer realTimeAddMin,Integer planId){
+        Plan plan = planDao.getPlan(planId);
+        Integer realtimeMin = plan.getRealtime() + realTimeAddMin;
+        Integer planTime = plan.getPlantime();
+        if(realtimeMin>=planTime){
+            plan.setFinished("true");
+        }
+        plan.setRealtime(realtimeMin);
+        planDao.updatePlanByPlanId(plan);
+    }
 }

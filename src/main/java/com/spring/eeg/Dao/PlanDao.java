@@ -26,7 +26,9 @@ public class PlanDao {
     public Plan getPlan(Integer planId){
         return planMapper.selectByPrimaryKey(planId);
     }
-
+    public void updatePlanByPlanId(Plan plan){
+        planMapper.updateByPrimaryKey(plan);
+    }
     public void updateFinished(Integer planId, String finished) {
         Plan plan = new Plan();
         plan.setPlanid(planId);

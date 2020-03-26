@@ -6,6 +6,7 @@ import com.spring.eeg.mbg.model.Eegfilelist;
 import com.spring.eeg.mbg.model.Userlastweekstate;
 import com.spring.eeg.service.EEGFileService;
 import com.spring.eeg.service.EEGStatisticService;
+import com.spring.eeg.utils.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.InputStream;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -71,21 +76,28 @@ public class EEGController {
     @ResponseBody
     public String uploadEEGFile(@RequestParam("planId") Integer planId,
                                 @RequestParam("fileTitle") String fileTitle,
-
                                 @RequestParam("uploadDate") String uploadDate,
-                                @RequestParam("info") String info
-            ,
-                                @RequestParam("EEGFile") MultipartFile[] EEGFile, HttpServletRequest request
-                                ){
+                                @RequestParam("info") String info,
+                                @RequestParam("EEGFile") MultipartFile[] EEGFile,
+                                HttpServletRequest request,Map<String,Object>map){
         System.out.println("TAGTAG");
         log.info(fileTitle);
         log.info(planId.toString());
         log.info(uploadDate.toString());
         log.info(info.toString());
         log.info(String.valueOf(EEGFile.length));
-        MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
-        List<MultipartFile> mutilpartFiles = multipartHttpServletRequest.getFiles("EEGFile");
-        System.out.println(mutilpartFiles);
+        MultipartFile multipartFile = null;
+        LocalDate parse = LocalDate.parse(uploadDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        Date date = DateUtil.toUtilDate(parse);
+        System.out.println(date);
+        if(EEGFile.length==0){
+            return "error.html";
+        }
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Map<String,Object> fileResult = eegFileService.analysis(planId,user.getUserid(),fileTitle,uploadDate,info,EEGFile);
+        System.out.println(fileResult);
+//        map.putAll(fileResult);
         return "newEEGFile.html";
     }
 }
