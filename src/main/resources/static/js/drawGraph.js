@@ -18,8 +18,11 @@ function getCurrentYearGraph(id) {
     )
 }
 
+let tag_res = null;
+
 function drawCalendarGraph(id,result) {
     var myChart = echarts.init(document.getElementById(id));
+    tag_res = result
     option = {
         tooltip: {},
         visualMap: {
@@ -79,6 +82,9 @@ function drawLastWeek(id,result) {
         result['fridayattentiontime'],
         result['saturdayattentiontime'],
         result['sundayattentiontime']]
+    for (let i = 0; i < attentionTime.data.length; i++) {
+        attentionTime.data[i] = attentionTime.data[i] / 60
+    }
     totalTime.data = [
         result['mondayattentiontime'],
         result['tuesdaytotaltime'],
@@ -87,6 +93,9 @@ function drawLastWeek(id,result) {
         result['fridaytotaltime'],
         result['saturdaytotaltime'],
         result['sundaytotaltime']]
+    for (let i = 0; i < totalTime.data.length; i++) {
+        totalTime.data[i] = totalTime.data[i] / 60
+    }
     option = {
         title: {
             text: 'Last Week Review'
@@ -131,6 +140,8 @@ function getLastWeekEveryDay(id) {
             // async: false,
             success: function (result) {
                // alert(id)
+               //  alert("s")
+
                 drawLastWeek(id,result)
             }
         }

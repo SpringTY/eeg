@@ -48,6 +48,7 @@ function submitEEGFile() {
         // contentType: false, // 告诉jQuery不要去设置Content-Type请求头
             success: function (res) {
                 alert("success")
+                console.log(res);
             }
         }
     )

@@ -67,6 +67,11 @@ public class EEGController {
         System.out.println("/document + TAG");
         return "document.html";
     }
+    @RequestMapping(value = "/fileAnalysisResult")
+    public String fileAnalysisResult(){
+
+        return "fileAnalysisResult.html";
+    }
     @RequestMapping(value = "/newEEGFile")
     public String newEEGFile(){
 
@@ -80,24 +85,16 @@ public class EEGController {
                                 @RequestParam("info") String info,
                                 @RequestParam("EEGFile") MultipartFile[] EEGFile,
                                 HttpServletRequest request,Map<String,Object>map){
-        System.out.println("TAGTAG");
-        log.info(fileTitle);
-        log.info(planId.toString());
-        log.info(uploadDate.toString());
-        log.info(info.toString());
-        log.info(String.valueOf(EEGFile.length));
-        MultipartFile multipartFile = null;
-        LocalDate parse = LocalDate.parse(uploadDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        Date date = DateUtil.toUtilDate(parse);
-        System.out.println(date);
+//        log.info(fileTitle);
+//        log.info(planId.toString());
+//        log.info(uploadDate.toString());
+//        log.info(info.toString());
+//        log.info(String.valueOf(EEGFile.length));
         if(EEGFile.length==0){
             return "error.html";
         }
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        Map<String,Object> fileResult = eegFileService.analysis(planId,user.getUserid(),fileTitle,uploadDate,info,EEGFile);
-        System.out.println(fileResult);
-//        map.putAll(fileResult);
-        return "newEEGFile.html";
+        Integer FileId = eegFileService.analysis(planId,user.getUserid(),fileTitle,uploadDate,info,EEGFile);
+        return FileId.toString();
     }
 }

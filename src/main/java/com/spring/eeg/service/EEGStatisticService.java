@@ -76,10 +76,11 @@ public class EEGStatisticService {
         Userlastweekstate userlastweekstate = userLastWeekStateDao.getUserLastWeekState(userId);
         //上次状态更新日期
         Date lastUpdate = userlastweekstate.getLastupdate();
-        if(isLastUpdateInValid(lastUpdate)){
-            System.out.println("update");
+//        if(isLastUpdateInValid(lastUpdate)){
+//            System.out.println("update");
+        //
             upDateLastWeekState(userId);
-        }
+//        }
         return userLastWeekStateDao.getUserLastWeekState(userId);
     }
 
@@ -181,6 +182,8 @@ public class EEGStatisticService {
      */
     public void addLearnStateTime(Integer userId, Integer AttentionTime,Integer totalTime,Date date){
         Learnstate learnstate = learnStateDao.getLearnStateByIdAndDate(userId,date);
+        AttentionTime /= 60;
+        totalTime /= 60;
         if(learnstate == null){
             learnstate = new Learnstate();
             learnstate.setTotaltime(totalTime);

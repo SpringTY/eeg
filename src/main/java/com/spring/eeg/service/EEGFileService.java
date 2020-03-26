@@ -105,7 +105,7 @@ public class EEGFileService {
         eegfilelistMapper.insert(eegfilelist);
     }
     @Transactional
-    public Map<String, Object> analysis(Integer planId,Integer userId, String fileTitle, String uploadDate, String info, MultipartFile[] eegFile) {
+    public Integer analysis(Integer planId,Integer userId, String fileTitle, String uploadDate, String info, MultipartFile[] eegFile) {
         if(eegFile.length==0) {
             return null;
         }
@@ -132,11 +132,21 @@ public class EEGFileService {
         // 4.添加到学习记录
         eegStatisticService.addLearnStateTime(userId,attentionTimeS,totalTimeS,date);
         // 5. 添加FileList
-        this.addEEGFileList(path,info,totalTimeS,attentionTimeS,fileTitle,date,planId,userId);
+        addEEGFileList(path,info,totalTimeS/60,attentionTimeS/60,fileTitle,date,planId,userId);
         // 6.更新上周学习计划?
         eegStatisticService.upDateLastWeekState(userId);
-        //
+        // 7.得到回显
         fileResult.putAll(analysis);
-        return fileResult;
+        Eegfilelist eegfilelist = getFileByPath(path);
+        return eegfilelist.getFileid();
+    }
+
+    private Eegfilelist getFileByPath(String path) {
+        EegfilelistExample eegfilelistExample = new EegfilelistExample();
+        EegfilelistExample.Criteria criteria = eegfilelistExample.createCriteria();
+        criteria.andFilepathEqualTo(path);
+        List<Eegfilelist> eegFileLists = eegfilelistMapper.selectByExample(eegfilelistExample);
+        if(eegFileLists.size()==0) return null;
+        return eegFileLists.get(0);
     }
 }
