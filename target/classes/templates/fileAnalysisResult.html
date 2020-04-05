@@ -105,16 +105,32 @@
         <div class="layout-px-spacing">
 
             <div class="row layout-top-spacing">
+                <div class="col-12 layout-spacing">
+                    <div class="widget widget-chart-one">
+                        <div class="widget-heading">
+                            <h2>文件信息</h2>
+                            <ul class="tabs tab-pills">
+                                <li><a href="/planList" id="tb_2" class="btn btn-primary">转到计划</a></li>
+                            </ul>
 
-                <!-- 日历图 -->
-                <!-- 日历图 -->
+                        </div>
+
+                        <div class="widget-content">
+                            <div class="tabs tab-content">
+                                <div id = 'fileTitle'>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+<!--               eSense曲线-->
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
                     <div class="widget widget-chart-one">
                         <div class="widget-heading">
                             <h5 class="">专注度曲线(NeuroSky eSense算法计算出)</h5>
-                            <ul class="tabs tab-pills">
-                                <li><a href="javascript:void(0);" id="tb_1" class="tabmenu">刷新</a></li>
-                            </ul>
                         </div>
 
                         <div class="widget-content">
@@ -139,7 +155,7 @@
 
                         <div class="widget-content">
                             <div class="tabs tab-content">
-                                <div id="content_2" class="tabcontent">
+                                <div id="content_2" class="tab content">
                                     <!--日历图-->
                                     <!--日历图-->
                                     <!--日历图-->
@@ -148,7 +164,7 @@
                                     <!--日历图-->
                                     <!--日历图-->
                                     <!--日历图-->
-                                    <div id="lastWeekAttention" style="width:750px;height:300px;"></div>
+                                    <div id="attentionBar" style="width:750px;height:400px;"></div>
                                 </div>
                             </div>
                         </div>
@@ -176,7 +192,7 @@
                                     <!--日历图-->
                                     <!--日历图-->
                                     <!--日历图-->
-                                    <div id="lastWeekConstitute" style="width:350px;height:300px;"></div>
+                                    <div id="attentionPie" style="width:350px;height:400px;"></div>
                                 </div>
                             </div>
                         </div>
@@ -197,7 +213,7 @@
 
 </div>
 <!-- END MAIN CONTAINER -->
-
+<script src="../assets/js/echarts.js"></script>
 
 <script th:inline="javascript">
     // alert([[${mass}]])
@@ -208,9 +224,25 @@
 <!--<script src="../assets/js/config.js"></script>-->
 <div th:replace="common/cssAndJavascript :: jsCode"></div>
 
-<script src="../js/drawGraphForFileAnalysis.js"></script>
-<script type="text/javascript">
 
+<script type="text/javascript" th:inline="javascript">
+    let eegFileInfo =[[${eegFileInfo}]]
+    let attentionList = [[${attentionList}]]
+    // alert(fileTitle)
+    document.getElementById('eSenseAttention');
+
+</script>
+<script src="../js/drawGraphForFileAnalysis.js"></script>
+<script type="text/javascript" th:inline="javascript">
+    attenTiondata = attentionList //[820, 932, 901, 934, 1290, 1330, 1320]
+    barData = [120, 200, 150, 80, 70]
+    pieData = {
+        attentionTime: 20,
+        unAttentionTime:30
+    }
+    drawAttentionBar('attentionBar',barData)
+    eSenseAttention('eSenseAttention',attenTiondata)
+    attentionPie('attentionPie',pieData);
 </script>
 </body>
 </html>

@@ -29,7 +29,12 @@ public class PlanService {
     }
 
     public List<Plan> getPlans(User user){
-        return planDao.getPlans(user.getUserid());
+        List<Plan> plans = planDao.getPlans(user.getUserid());
+        for (Plan plan : plans) {
+            plan.setRealtime(plan.getRealtime()/60);
+            plan.setPlantime(plan.getPlantime()/60);
+        }
+        return plans;
     }
 
     private boolean operationValid(User user,Integer planId){

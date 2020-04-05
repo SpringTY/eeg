@@ -32,7 +32,7 @@ public class PlanController {
         log.debug(attentionTime.toString());
         log.debug(important);
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
+        attentionTime = attentionTime * 60;
         planService.createNewPlan(planTitle,description,attentionTime,important,user);
         return "success";
     }

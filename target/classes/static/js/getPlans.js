@@ -26,7 +26,6 @@ function startMethod() {
 startMethod()
 
 function submitEEGFile() {
-    alert('submit')
     let filePath = $('#EEGFile')[0].files[0] //document.getElementById('EEGFile').files[0]
     let info = document.getElementById('info').value;
     let uploadDate = document.getElementById('uploadDate').value;
@@ -34,7 +33,7 @@ function submitEEGFile() {
     let fileTitle = document.getElementById('fileTitle').value;
     // let EEGFile = new FormData();
     // EEGFile.append('EEGFile',filePath)
-    alert("coming")
+    alert("正在处理中")
     var EEGFile = new FormData($("#fileInfo")[0]);
     $.ajax({
             type: "POST",
@@ -47,8 +46,7 @@ function submitEEGFile() {
         // processData: false, // 告诉jQuery不要去处理发送的数据
         // contentType: false, // 告诉jQuery不要去设置Content-Type请求头
             success: function (res) {
-                alert("success")
-                console.log(res);
+                window.location.href = "/fileAnalysisResult/"+res
             }
         }
     )

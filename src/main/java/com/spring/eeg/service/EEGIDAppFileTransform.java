@@ -4,9 +4,7 @@ import com.spring.eeg.Model.EEGData;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -36,6 +34,11 @@ public class EEGIDAppFileTransform implements RowEEGDataTransform {
         return eegData;
     }
 
+    /**
+     * 512hz采样文件
+     * @param multipartFile
+     * @return
+     */
     @Override
     public List<EEGData> transform(MultipartFile multipartFile)   {
         List<EEGData> result = new LinkedList<>();
@@ -46,6 +49,43 @@ public class EEGIDAppFileTransform implements RowEEGDataTransform {
             inputStream = multipartFile.getInputStream();
              bufferedInputStream = new BufferedInputStream(inputStream);
              scanner = new Scanner(bufferedInputStream);
+            if(scanner.hasNext()){
+                scanner.nextLine();
+            }
+            EEGData eegData = null;
+            int cnt = 0;
+            while (scanner.hasNext()){
+                cnt++;
+                if(cnt == 511){
+                    cnt=0;
+                    eegData = this.transform(scanner.nextLine());
+                    result.add(eegData);
+                }
+            }
+            scanner.close();
+            bufferedInputStream.close();
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /**
+     * 1hz文件
+     * @param file
+     * @return
+     */
+    @Override
+    public List<EEGData> transform(File file){
+        List<EEGData> result = new LinkedList<>();
+        InputStream inputStream = null;
+        BufferedInputStream bufferedInputStream = null;
+        Scanner scanner = null;
+        try {
+            inputStream = new FileInputStream(file);
+            bufferedInputStream = new BufferedInputStream(inputStream);
+            scanner = new Scanner(bufferedInputStream);
             if(scanner.hasNext()){
                 scanner.nextLine();
             }

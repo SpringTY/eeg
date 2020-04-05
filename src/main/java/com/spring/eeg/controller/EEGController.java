@@ -68,8 +68,15 @@ public class EEGController {
         return "document.html";
     }
     @RequestMapping(value = "/fileAnalysisResult")
-    public String fileAnalysisResult(){
+    public String fileAnalysisResult(Map<String,Object>map){
 
+        map.put("fileTitle","2");
+        return "fileAnalysisResult.html";
+    }
+    @RequestMapping(value = "/fileAnalysisResult/{eegFileId}")
+    public String fileAnalysisResult(Map<String,Object>map,@PathVariable("eegFileId") Integer eegFileId){
+        eegFileService.getFileInfo(eegFileId,map);
+        map.put("fileTitle","2");
         return "fileAnalysisResult.html";
     }
     @RequestMapping(value = "/newEEGFile")

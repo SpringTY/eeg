@@ -209,15 +209,14 @@
             //   指定第最后一列
             targets: 5,
             render: function (data, type, row, meta) {
-                return '<a type="button" class="btn btn-primary"  onclick="del(' + row['FileId'] + ')" >详细</a>';
+                return '<a type="button" class="btn btn-primary"  onclick="del(' + row['fileid'] + ')" >详细</a>';
             }
         }]
     });
 
     function del(id) {
-        window.open('/EEGFile/'+id)
-        alert(id)
-        console.log(id);
+        // alert(id)
+        window.location.href = '/fileAnalysisResult/' + id
     }
 </script>
 
