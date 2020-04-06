@@ -228,6 +228,12 @@
 <script type="text/javascript" th:inline="javascript">
     let eegFileInfo =[[${eegFileInfo}]]
     let attentionList = [[${attentionList}]]
+    let attentionZeroToTwenty = [[${attentionZeroToTwenty}]]
+    let attentionTwentyToForty = [[${attentionTwentyToForty}]]
+    let attentionFortyToSixty = [[${attentionFortyToSixty}]]
+    let attentionSixtyToEighty = [[${attentionSixtyToEighty}]]
+    let attentionEightToFull = [[${attentionEightToFull}]]
+
     // alert(fileTitle)
     document.getElementById('eSenseAttention');
 
@@ -235,12 +241,23 @@
 <script src="../js/drawGraphForFileAnalysis.js"></script>
 <script type="text/javascript" th:inline="javascript">
     attenTiondata = attentionList //[820, 932, 901, 934, 1290, 1330, 1320]
-    barData = [120, 200, 150, 80, 70]
-    pieData = {
-        attentionTime: 20,
-        unAttentionTime:30
+    barData = [attentionZeroToTwenty, attentionTwentyToForty, attentionFortyToSixty,
+        attentionSixtyToEighty, attentionEightToFull]
+    let sumBarData = 0;
+    for (let i = 0; i < barData.length; i++) {
+        sumBarData += barData[i];
     }
-    drawAttentionBar('attentionBar',barData)
+    let p = [0.0,0.0,0.0,0.0,0.0]
+    for (let i = 0; i < barData.length; i++) {
+        p[i] = (barData[i] / sumBarData) * 100;
+    }
+    let attentionTime = p[0]+p[1];
+    let unAttentionTime = 100 - attentionTime;
+    pieData = {
+        attentionTime: attentionTime,
+        unAttentionTime:unAttentionTime
+    }
+    drawAttentionBar('attentionBar',p)
     eSenseAttention('eSenseAttention',attenTiondata)
     attentionPie('attentionPie',pieData);
 </script>
