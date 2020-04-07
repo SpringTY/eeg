@@ -121,4 +121,9 @@ public class SocialController {
 
         return "FriendsApplication.html";
     }
+    @RequestMapping(value = "/ArticleRead")
+    public String ArticleRead(){
+
+        return "ArticleRead.html";
+    }
 }

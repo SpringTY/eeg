@@ -59,7 +59,7 @@
                     <nav class="breadcrumb-one" aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="javascript:void(0);">EEG 文件</a></li>
-<!--                            <li class="breadcrumb-item active" aria-current="page"><span>Sales</span></li>-->
+                            <!--                            <li class="breadcrumb-item active" aria-current="page"><span>Sales</span></li>-->
                         </ol>
                     </nav>
 
@@ -114,11 +114,12 @@
                                 <thead>
                                 <tr>
                                     <th>文件号</th>
+                                    <th>文件名</th>
+                                    <th>计划名</th>
                                     <th>上传时间</th>
-                                    <th>是否完成分析</th>
-                                    <th>总时间</th>
-                                    <th>专注时间</th>
-                                    <th class="no-content" ></th>
+                                    <th>总时间(单位:分钟)</th>
+                                    <th>专注时间(单位:分钟)</th>
+                                    <th class="no-content"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -156,7 +157,8 @@
 
 <script src="../plugins/table/datatable/datatables.js"></script>
 <script>
-    var data = null
+    let data = null
+    let plans = null
     $.ajax({
             type: "GET",
             url: "/getFileList",
@@ -166,15 +168,31 @@
             }
         }
     )
+    $.ajax({
+            type: "GET",
+            url: "/getPlans",
+            async: false,
+            success: function (result) {
+                plans = result
+            }
+        }
+    )
     for (let i = 0; i < data.length; i++) {
-        if(data[i]['analysised']==1){
+        for (let j = 0; j < plans.length; j++) {
+            if(data[i]['planid']==plans[j]['planid']){
+                data[i]['planname'] = plans[j]['planname']
+            }
+        }
+    }
+    for (let i = 0; i < data.length; i++) {
+        if (data[i]['analysised'] == 1) {
             data[i]['analysised'] = "是"
-        }else{
+        } else {
             data[i]['analysised'] = '否'
         }
-        var date_str = data[i]['uploaddate'].substring(0,10)
-        var time_str = data[i]['uploaddate'].substring(11,16)
-        data[i]['uploaddate']  =date_str +' '+time_str
+        var date_str = data[i]['uploaddate'].substring(0, 10)
+        var time_str = data[i]['uploaddate'].substring(11, 16)
+        data[i]['uploaddate'] = date_str + ' ' + time_str
     }
     console.log(data)
 
@@ -198,8 +216,10 @@
         'data': data,
         'columns': [
             {data: 'fileid'},
+            {data: 'note'},
+            {data:'planname'},
             {data: 'uploaddate'},
-            {data: 'analysised'},
+
             {data: 'totaltime'},
             {data: 'attentiontime'},
             {data: null},
@@ -207,7 +227,7 @@
         ],
         columnDefs: [{
             //   指定第最后一列
-            targets: 5,
+            targets: 6,
             render: function (data, type, row, meta) {
                 return '<a type="button" class="btn btn-primary"  onclick="del(' + row['fileid'] + ')" >详细</a>';
             }

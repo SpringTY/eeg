@@ -183,4 +183,9 @@ public class SocialService {
         friendApplicationDao.deleteFriendApplicaiton(userFromId,userToId);
         friendApplicationDao.deleteFriendApplicaiton(userToId,userFromId);
     }
+    public List<ArticleJson> getFriendArticle(Integer UserId){
+        LinkedList<ArticleJson> articles = new LinkedList<>();
+        
+        return articles;
+    }
 }
