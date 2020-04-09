@@ -40,9 +40,9 @@
         <!--<table tableName="userLastWeekState"/>-->
         <!--<table tableName="userLogin"/>-->
         <!--<table tableName="userMassage"/>-->
-        <table tableName="plan">
+        <table tableName="friendsArticle">
         </table>
-        <table tableName="eegFileList">
+        <table tableName="publicArticle">
         </table>
     </context>
 </generatorConfiguration>

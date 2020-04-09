@@ -213,6 +213,14 @@ function getLastWeekConstitute(id) {
     )
     // alert(constitute)
     console.log('TAG:getLastWeek');
+    var quill = new Quill('#editor-container', {
+        modules: {
+            toolbar: null
+        },
+        placeholder: 'Compose an epic...',
+        theme: 'snow' , // or 'bubble'
+        readonly: true
+    });
     // console.log(constitute);
     // console.log(constitute['unAttentionTime']);
     // console.log(constitute['attentionTime']);

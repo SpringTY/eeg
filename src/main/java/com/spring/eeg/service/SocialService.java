@@ -5,6 +5,7 @@ import com.spring.eeg.Dao.FriendApplicationDao;
 import com.spring.eeg.Dao.FriendListDao;
 import com.spring.eeg.Dao.UserLoginDao;
 import com.spring.eeg.Model.ArticleJson;
+import com.spring.eeg.Model.ArticleJsonDisplay;
 import com.spring.eeg.Model.User;
 import com.spring.eeg.Model.UserApplication;
 import com.spring.eeg.mbg.model.*;
@@ -183,9 +184,28 @@ public class SocialService {
         friendApplicationDao.deleteFriendApplicaiton(userFromId,userToId);
         friendApplicationDao.deleteFriendApplicaiton(userToId,userFromId);
     }
-    public List<ArticleJson> getFriendArticle(Integer UserId){
-        LinkedList<ArticleJson> articles = new LinkedList<>();
-        
+
+    public List<ArticleJsonDisplay> getSocialArticles(Integer userId){
+        LinkedList<ArticleJsonDisplay> articles = new LinkedList<>();
+        List<Publicarticle> publicAll = articleDao.getPublicAll();
+        List<Friendsarticle> friendsArticle = articleDao.getFriendsArticle(userId);
+        ArticleJsonDisplay articleJsonDisplay = null;
+        for (Publicarticle publicarticle : publicAll) {
+            articleJsonDisplay = new ArticleJsonDisplay();
+            articleJsonDisplay.setAuthor(publicarticle.getUsername());
+            articleJsonDisplay.setAuthority("public");
+            articleJsonDisplay.setTitle(publicarticle.getArticlename());
+            articleJsonDisplay.setContents(getArticleContent(publicarticle.getArticlepath()));
+            articles.addLast(articleJsonDisplay);
+        }
+        for (Friendsarticle friendsarticle : friendsArticle) {
+            articleJsonDisplay = new ArticleJsonDisplay();
+            articleJsonDisplay.setAuthor(friendsarticle.getUsername());
+            articleJsonDisplay.setAuthority("friends");
+            articleJsonDisplay.setTitle(friendsarticle.getArticlename());
+            articleJsonDisplay.setContents(getArticleContent(friendsarticle.getArticlepath()));
+            articles.addLast(articleJsonDisplay);
+        }
         return articles;
     }
 }
