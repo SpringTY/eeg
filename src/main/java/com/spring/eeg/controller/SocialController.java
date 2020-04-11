@@ -148,4 +148,9 @@ public class SocialController {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return socialService.getSocialArticles(user.getUserid());
     }
+
+    @RequestMapping(value = "/socialRank")
+    public String socialRank(){
+        return "socialRank.html";
+    }
 }

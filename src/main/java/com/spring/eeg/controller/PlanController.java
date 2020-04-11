@@ -1,7 +1,10 @@
 package com.spring.eeg.controller;
 
+import com.spring.eeg.Dao.PlanDao;
 import com.spring.eeg.Model.User;
+import com.spring.eeg.mbg.model.Lastweekview;
 import com.spring.eeg.mbg.model.Plan;
+import com.spring.eeg.mbg.model.Planstat;
 import com.spring.eeg.service.PlanService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -124,5 +127,41 @@ public class PlanController {
         }
         return planService.deletePlanPermanently(user,planId);
     }
+    @RequestMapping(value = "/getLastWeekStatistic")
+    @ResponseBody
+    public Planstat getLastWeekStatistic(){
+        User user = null;
+        try {
+            user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        }catch (Exception e){
 
+        }
+        return planService.getLastWeekStatistic(user.getUserid());
+    }
+    @RequestMapping(value = "/getRecentPlans")
+    @ResponseBody
+    public List<Plan> getRecentPlans(){
+        User user = null;
+        try {
+            user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        }catch (Exception e){
+
+        }
+        return planService.getRecentPlans(user.getUserid());
+    }
+
+    @RequestMapping(value = "/getFriendsPlanRank")
+    @ResponseBody
+    public List<Planstat> getFriendsPlanRank(){
+        User user = null;
+        user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return planService.getFriendsPlanRank(user.getUserid());
+    }
+    @RequestMapping(value = "/getFriendsWeekRank")
+    @ResponseBody
+    public List<Lastweekview> getFriendsWeekRank(){
+        User user = null;
+        user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return planService.getFriendsWeekRank(user.getUserid());
+    }
 }

@@ -156,6 +156,7 @@ public class EEGFileService {
     }
     @Transactional
     public Integer analysis(Integer planId,Integer userId, String fileTitle, String uploadDate, String info, MultipartFile[] eegFile) {
+        log.info("userid:"+userId);
         if(eegFile.length==0) {
             return null;
         }

@@ -1,8 +1,11 @@
 package com.spring.eeg.Dao;
 
 import com.spring.eeg.mbg.dao.PlanMapper;
+import com.spring.eeg.mbg.dao.PlanstatMapper;
 import com.spring.eeg.mbg.model.Plan;
 import com.spring.eeg.mbg.model.PlanExample;
+import com.spring.eeg.mbg.model.Planstat;
+import com.spring.eeg.mbg.model.PlanstatExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -12,6 +15,9 @@ import java.util.List;
 public class PlanDao {
     @Autowired
     PlanMapper planMapper;
+
+    @Autowired
+    PlanstatMapper planstatMapper;
 
     public void insert(Plan plan){
         planMapper.insert(plan);
@@ -52,5 +58,34 @@ public class PlanDao {
 
     public void deletePlan(Integer planId) {
         planMapper.deleteByPrimaryKey(planId);
+    }
+    public Planstat getPlanStatistic(Integer userId){
+        PlanstatExample planstatExample = new PlanstatExample();
+        PlanstatExample.Criteria criteria = planstatExample.createCriteria();
+        criteria.andUseridEqualTo(userId);
+        List<Planstat> planstats = planstatMapper.selectByExample(planstatExample);
+        return (planstats.size() !=0)?planstats.get(0):null;
+    }
+
+    public List<Plan> getRecentPlans(Integer userId){
+
+        PlanExample planExample = new PlanExample();
+        PlanExample.Criteria criteria = planExample.createCriteria();
+        criteria.andUseridEqualTo(userId);
+        planExample.setOrderByClause("planDate desc");
+        List<Plan> plans = planMapper.selectByExample(planExample);
+        if(plans.size()<6){
+            return plans;
+        }
+        return plans.subList(0,6);
+    }
+    public List<Planstat> getRecentPlanStatistics(List<Integer> userIds){
+        PlanstatExample planstatExample = new PlanstatExample();
+        PlanstatExample.Criteria criteria = planstatExample.createCriteria();
+        criteria.andUseridIn(userIds);
+        planstatExample.setOrderByClause("finished desc");
+        List<Planstat> planstats = planstatMapper.selectByExample(planstatExample);
+        if(planstats.size()<7) return planstats;
+        return planstats.subList(0,7);
     }
 }

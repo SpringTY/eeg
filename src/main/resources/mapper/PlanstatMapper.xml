@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.eeg.mbg.dao.PlanstatMapper">
+  <resultMap id="BaseResultMap" type="com.spring.eeg.mbg.model.Planstat">
+    <result column="userId" jdbcType="INTEGER" property="userid" />
+    <result column="finished" jdbcType="BIGINT" property="finished" />
+    <result column="important" jdbcType="BIGINT" property="important" />
+    <result column="trash" jdbcType="BIGINT" property="trash" />
+    <result column="realTime" jdbcType="DECIMAL" property="realtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    userId, finished, important, trash, realTime
+  </sql>
+  <select id="selectByExample" parameterType="com.spring.eeg.mbg.model.PlanstatExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from planstat
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.spring.eeg.mbg.model.PlanstatExample">
+    delete from planstat
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.spring.eeg.mbg.model.Planstat">
+    insert into planstat (userId, finished, important, 
+      trash, realTime)
+    values (#{userid,jdbcType=INTEGER}, #{finished,jdbcType=BIGINT}, #{important,jdbcType=BIGINT}, 
+      #{trash,jdbcType=BIGINT}, #{realtime,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.spring.eeg.mbg.model.Planstat">
+    insert into planstat
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="finished != null">
+        finished,
+      </if>
+      <if test="important != null">
+        important,
+      </if>
+      <if test="trash != null">
+        trash,
+      </if>
+      <if test="realtime != null">
+        realTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="finished != null">
+        #{finished,jdbcType=BIGINT},
+      </if>
+      <if test="important != null">
+        #{important,jdbcType=BIGINT},
+      </if>
+      <if test="trash != null">
+        #{trash,jdbcType=BIGINT},
+      </if>
+      <if test="realtime != null">
+        #{realtime,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.spring.eeg.mbg.model.PlanstatExample" resultType="java.lang.Long">
+    select count(*) from planstat
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update planstat
+    <set>
+      <if test="record.userid != null">
+        userId = #{record.userid,jdbcType=INTEGER},
+      </if>
+      <if test="record.finished != null">
+        finished = #{record.finished,jdbcType=BIGINT},
+      </if>
+      <if test="record.important != null">
+        important = #{record.important,jdbcType=BIGINT},
+      </if>
+      <if test="record.trash != null">
+        trash = #{record.trash,jdbcType=BIGINT},
+      </if>
+      <if test="record.realtime != null">
+        realTime = #{record.realtime,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update planstat
+    set userId = #{record.userid,jdbcType=INTEGER},
+      finished = #{record.finished,jdbcType=BIGINT},
+      important = #{record.important,jdbcType=BIGINT},
+      trash = #{record.trash,jdbcType=BIGINT},
+      realTime = #{record.realtime,jdbcType=DECIMAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
