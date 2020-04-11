@@ -40,7 +40,9 @@
         <!--<table tableName="userLastWeekState"/>-->
         <!--<table tableName="userLogin"/>-->
         <!--<table tableName="userMassage"/>-->
-        <table tableName="planstatPlus">
+        <table tableName="class_table">
+        </table>
+        <table tableName="class_user">
         </table>
     </context>
 </generatorConfiguration>

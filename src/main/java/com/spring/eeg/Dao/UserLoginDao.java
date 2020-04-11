@@ -6,6 +6,7 @@ import com.spring.eeg.mbg.model.UserloginExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -24,6 +25,7 @@ public class UserLoginDao {
         return userlogins.get(0);
     }
     public List<Userlogin> getUserByUserId(List<Integer> UserId) {
+        if(UserId.size()==0) return new ArrayList<>();
         UserloginExample userloginExample = new UserloginExample();
         UserloginExample.Criteria criteria = userloginExample.createCriteria();
         criteria.andUseridIn(UserId);

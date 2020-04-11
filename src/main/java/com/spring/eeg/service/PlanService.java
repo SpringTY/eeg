@@ -44,6 +44,10 @@ public class PlanService {
         }
         return plans;
     }
+    public List<Plan> getPlans(Integer userId) {
+        List<Plan> plans = planDao.getPlans(userId);
+        return plans;
+    }
 
     private boolean operationValid(User user, Integer planId) {
         Plan plan = planDao.getPlan(planId);
