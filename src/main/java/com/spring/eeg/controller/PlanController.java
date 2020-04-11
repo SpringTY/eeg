@@ -5,6 +5,7 @@ import com.spring.eeg.Model.User;
 import com.spring.eeg.mbg.model.Lastweekview;
 import com.spring.eeg.mbg.model.Plan;
 import com.spring.eeg.mbg.model.Planstat;
+import com.spring.eeg.mbg.model.Planstatplus;
 import com.spring.eeg.service.PlanService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -152,7 +153,7 @@ public class PlanController {
 
     @RequestMapping(value = "/getFriendsPlanRank")
     @ResponseBody
-    public List<Planstat> getFriendsPlanRank(){
+    public List<Planstatplus> getFriendsPlanRank(){
         User user = null;
         user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return planService.getFriendsPlanRank(user.getUserid());

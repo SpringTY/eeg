@@ -2,10 +2,8 @@ package com.spring.eeg.Dao;
 
 import com.spring.eeg.mbg.dao.PlanMapper;
 import com.spring.eeg.mbg.dao.PlanstatMapper;
-import com.spring.eeg.mbg.model.Plan;
-import com.spring.eeg.mbg.model.PlanExample;
-import com.spring.eeg.mbg.model.Planstat;
-import com.spring.eeg.mbg.model.PlanstatExample;
+import com.spring.eeg.mbg.dao.PlanstatplusMapper;
+import com.spring.eeg.mbg.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -18,7 +16,8 @@ public class PlanDao {
 
     @Autowired
     PlanstatMapper planstatMapper;
-
+    @Autowired
+    PlanstatplusMapper planstatplusMapper;
     public void insert(Plan plan){
         planMapper.insert(plan);
     }
@@ -79,12 +78,12 @@ public class PlanDao {
         }
         return plans.subList(0,6);
     }
-    public List<Planstat> getRecentPlanStatistics(List<Integer> userIds){
-        PlanstatExample planstatExample = new PlanstatExample();
-        PlanstatExample.Criteria criteria = planstatExample.createCriteria();
+    public List<Planstatplus> getRecentPlanStatistics(List<Integer> userIds){
+        PlanstatplusExample planstatExample = new PlanstatplusExample();
+        PlanstatplusExample.Criteria criteria = planstatExample.createCriteria();
         criteria.andUseridIn(userIds);
         planstatExample.setOrderByClause("finished desc");
-        List<Planstat> planstats = planstatMapper.selectByExample(planstatExample);
+        List<Planstatplus> planstats = planstatplusMapper.selectByExample(planstatExample);
         if(planstats.size()<7) return planstats;
         return planstats.subList(0,7);
     }

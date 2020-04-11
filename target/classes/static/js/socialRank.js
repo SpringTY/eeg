@@ -4,22 +4,52 @@ function all_work() {
     getRecentPlans()
     getPlanStatistic()
     getLastWeekRank()
-
+    getPlanRank()
+//
 }
+
+function writePlanRank(ranks) {
+    let ranksHtml = ''
+    let rank = null
+    for (let i = 0; i < ranks.length; i++) {
+        rank = ranks[i]
+        ranksHtml = ranksHtml + ' <tr>\n' +
+            '                                            <td><div class="td-content product-brand">' + i + '</div></td>\n' +
+            '                                            <td><div class="td-content">' + rank['username'] + '</div></td>\n' +
+            '                                            <td><div class="td-content pricing"><span class="">' + rank['finished'] + '</span></div></td>\n' +
+            '                                            <td><div class="td-content pricing"><span class="">' + rank['trash'] + '</span></div></td>\n' +
+            '                                            <td><div class="td-content pricing"><span class="">' + rank['realtime'] + '</span></div></td>\n' +
+            '                                        </tr>'
+    }
+    $('#planRank').html(ranksHtml)
+}
+
+function getPlanRank() {
+    $.ajax({
+            type: "GET",
+            url: "/getFriendsPlanRank",
+            success: function (res) {
+                writePlanRank(res)
+            }
+        }
+    )
+}
+
 function writeLastWeekRank(weekRanks) {
     let weekRank = null
     let rankHtml = ''
     for (let i = 0; i < weekRanks.length; i++) {
         weekRank = weekRanks[i]
-        rankHtml = rankHtml +'   <tr><td><div class="td-content figure">'+i+'</div></td>\n' +
-            '                                                <td><div class="td-content">'+weekRank['username']+'</div></td>\n' +
-            '                                                <td><div class="td-content pricing"><span class="">'+weekRank['attention']+'</span></div></td>\n' +
-            '                                                <td><div class="td-content pricing"><span class="">'+weekRank['total']+'</span></div></td>\n </tr>' +
+        rankHtml = rankHtml + '   <tr><td><div class="td-content figure">' + i + '</div></td>\n' +
+            '                                                <td><div class="td-content">' + weekRank['username'] + '</div></td>\n' +
+            '                                                <td><div class="td-content pricing"><span class="">' + weekRank['attention'] + '</span></div></td>\n' +
+            '                                                <td><div class="td-content pricing"><span class="">' + weekRank['total'] + '</span></div></td>\n </tr>' +
             '                                           '
     }
     $('#lastWeekRank'
     ).html(rankHtml)
 }
+
 function getLastWeekRank() {
     $.ajax({
             type: "GET",
@@ -71,11 +101,11 @@ function writeRecentSixPlans(plans) {
     // console.log(plans);
     for (let i = 0; i < plans.length; i++) {
         plan = plans[i]
-        planHtml = planHtml +'<div class="item-timeline timeline-new">\n' +
+        planHtml = planHtml + '<div class="item-timeline timeline-new">\n' +
             '                                        <div class="t-dot" data-original-title="" title="">\n' +
             '                                        </div>\n' +
             '                                        <div class="t-text">\n' +
-            '                                            <p><span>'+plan['plandate'].substring(0,11)+'计划：'+plan['planname']+'\n' +
+            '                                            <p><span>' + plan['plandate'].substring(0, 11) + '计划：' + plan['planname'] + '\n' +
             '                                        </div>\n' +
             '                                    </div>'
     }

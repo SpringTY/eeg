@@ -149,12 +149,12 @@ public class PlanService {
         return userIds;
     }
 
-    public List<Planstat> getFriendsPlanRank(Integer userId) {
+    public List<Planstatplus> getFriendsPlanRank(Integer userId) {
         /**
          * userFromList is friends
          */
         List<Integer> userIds = getFriendsId(userId);
-        List<Planstat> recentPlanStatistics = planDao.getRecentPlanStatistics(userIds);
+        List<Planstatplus> recentPlanStatistics = planDao.getRecentPlanStatistics(userIds);
         return recentPlanStatistics;
     }
 
