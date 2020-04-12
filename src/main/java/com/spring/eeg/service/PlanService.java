@@ -20,7 +20,9 @@ public class PlanService {
     FriendListDao friendListDao;
     @Autowired
     LastweekviewMapper lastweekviewMapper;
-
+//    public List<Userlogin> getFriends(){
+//
+//    }
     public void createNewPlan(String planTitle, String description, Integer attentionTime, String important, User user) {
         Plan plan = new Plan();
         plan.setFinished("false");

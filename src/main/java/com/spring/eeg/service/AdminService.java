@@ -1,4 +1,4 @@
-package com.spring.eeg.Model;
+package com.spring.eeg.service;
 
 import com.spring.eeg.Dao.UserLoginDao;
 import com.spring.eeg.mbg.dao.ClassTableMapper;

@@ -8,6 +8,7 @@ import com.spring.eeg.Model.ArticleJson;
 import com.spring.eeg.Model.ArticleJsonDisplay;
 import com.spring.eeg.Model.User;
 import com.spring.eeg.Model.UserApplication;
+import com.spring.eeg.mbg.dao.ClassTableMapper;
 import com.spring.eeg.mbg.model.*;
 import com.spring.eeg.utils.ConstValues;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,10 @@ public class SocialService {
     FriendApplicationDao friendApplicationDao;
     @Autowired
     FriendListDao friendListDao;
+    @Autowired
+    PlanService planService;
+    @Autowired
+    ClassTableMapper classTableMapper;
     /**
      *  插入 存在覆盖
      * @param article
@@ -207,5 +212,20 @@ public class SocialService {
             articles.addLast(articleJsonDisplay);
         }
         return articles;
+    }
+
+    public List<Userlogin> getFriends(Integer userId) {
+        List<Integer> friendsId = planService.getFriendsId(userId);
+        friendsId.remove(userId);
+        List<Userlogin> userByUserId = userLoginDao.getUserByUserId(friendsId);
+        return userByUserId;
+    }
+
+    public void removeFriend(Integer userId, Integer userIdM) {
+        friendListDao.remove(userId,userIdM);
+    }
+
+    public List<ClassTable> getClasses(Integer userId) {
+        return null;
     }
 }

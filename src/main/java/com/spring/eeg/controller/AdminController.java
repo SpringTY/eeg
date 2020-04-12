@@ -1,15 +1,13 @@
 package com.spring.eeg.controller;
 
-import com.spring.eeg.Model.AdminService;
+import com.spring.eeg.service.AdminService;
 import com.spring.eeg.Model.User;
 import com.spring.eeg.mbg.model.ClassTable;
 import com.spring.eeg.mbg.model.Plan;
 import com.spring.eeg.mbg.model.Userlogin;
 import com.spring.eeg.service.PlanService;
-import com.spring.eeg.service.SocialService;
 import com.spring.eeg.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

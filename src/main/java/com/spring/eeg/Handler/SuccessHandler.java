@@ -26,9 +26,12 @@ public class SuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(user.getUserrole().equals("user")){
+        System.out.println(user.getUserrole());
+        if(user.getUserrole().equals("ROLE_user")){
+            log.info("user:"+user);
             httpServletResponse.sendRedirect("/index");
         }else{
+            log.info("admin:"+user);
             httpServletResponse.sendRedirect("/admin/index");
         }
 

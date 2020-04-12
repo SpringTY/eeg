@@ -27,4 +27,14 @@ public class FriendListDao {
         criteria.andUserfromEqualTo(userId);
         return friendlistMapper.selectByExample(friendlistExample);
     }
+
+    public void remove(Integer userId, Integer userIdM) {
+        FriendlistKey friendlistKey = new FriendlistKey();
+        friendlistKey.setUserfrom(userIdM);
+        friendlistKey.setUserto(userId);
+        friendlistMapper.deleteByPrimaryKey(friendlistKey);
+        friendlistKey.setUserto(userIdM);
+        friendlistKey.setUserfrom(userId);
+        friendlistMapper.deleteByPrimaryKey(friendlistKey);
+    }
 }
