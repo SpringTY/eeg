@@ -45,4 +45,11 @@ public class AdminService {
         List<Userlogin> userByUserId = userLoginDao.getUserByUserId(userIds);
         return userByUserId;
     }
+
+    public List<ClassTable> getClassTables(Integer userId) {
+        ClassTableExample classTableExample = new ClassTableExample();
+        ClassTableExample.Criteria criteria = classTableExample.createCriteria();
+        criteria.andAdminIdEqualTo(userId);
+        return classTableMapper.selectByExample(classTableExample);
+    }
 }

@@ -149,7 +149,7 @@
     <div id="content" class="main-content">
         <div class="layout-px-spacing">
             <div class="row layout-top-spacing">
-                <div class="col-12">
+                <div class="col-12" id="userInfo">
                     <h5>班级： 用户： </h5>
                 </div>
                 <div class="col-12">
@@ -205,6 +205,9 @@
 <div th:replace="common/cssAndJavascript :: jsCode"></div>
 
 <script type="text/javascript" th:inline="javascript">
+    let userInfo =[[${userInfo}]]
+    let userInfoHtml = ' <h5>用户： '+userInfo['username']+'</h5>'
+    $('#userInfo').html(userInfoHtml)
     let plans = [[${plans}]]
     let html = ''
     let progress

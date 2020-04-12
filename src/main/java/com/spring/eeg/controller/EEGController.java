@@ -6,6 +6,7 @@ import com.spring.eeg.mbg.model.Eegfilelist;
 import com.spring.eeg.mbg.model.Userlastweekstate;
 import com.spring.eeg.service.EEGFileService;
 import com.spring.eeg.service.EEGStatisticService;
+import com.spring.eeg.service.UserService;
 import com.spring.eeg.utils.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,26 +32,34 @@ public class EEGController {
     EEGStatisticService eegStatisticService;
     @Autowired
     EEGFileService eegFileService;
+    @Autowired
+    UserService userService;
     @ResponseBody
     @RequestMapping(value = "/getLastWeekEveryDay")
     public Userlastweekstate getLastWeekState() {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Userlastweekstate lastWeekState = eegStatisticService.getLastWeekState(user.getUserid());
+        User user =userService.getCurrentUser();
+        if(user == null){
+            return null;
+        } Userlastweekstate lastWeekState = eegStatisticService.getLastWeekState(user.getUserid());
         return lastWeekState;
     }
     @ResponseBody
     @RequestMapping(value ="/getLastWeekEEGTime")
     public EEGTime getLastWeekEEGTime(){
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        EEGTime lastWeekEEGTime = eegStatisticService.getLastWeekEEGTime(user.getUserid());
+        User user =userService.getCurrentUser();
+        if(user == null){
+            return null;
+        }EEGTime lastWeekEEGTime = eegStatisticService.getLastWeekEEGTime(user.getUserid());
         log.debug("TAG:getLastWeekEEGTime:"+lastWeekEEGTime.toString());
         return lastWeekEEGTime;
     }
     @ResponseBody
     @RequestMapping(value ="/getCurrentYearLearnTime")
     public List<List> getCurrentYearLearnTime(){
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return eegStatisticService.getLearnStateCurrentYear(user.getUserid());
+        User user =userService.getCurrentUser();
+        if(user == null){
+            return null;
+        }return eegStatisticService.getLearnStateCurrentYear(user.getUserid());
     }
     @ResponseBody
     @RequestMapping(value = "/getFileList")
@@ -100,8 +109,10 @@ public class EEGController {
         if(EEGFile.length==0){
             return "error.html";
         }
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Integer FileId = eegFileService.analysis(planId,user.getUserid(),fileTitle,uploadDate,info,EEGFile);
+        User user =userService.getCurrentUser();
+        if(user == null){
+            return null;
+        }Integer FileId = eegFileService.analysis(planId,user.getUserid(),fileTitle,uploadDate,info,EEGFile);
         return FileId.toString();
     }
 }

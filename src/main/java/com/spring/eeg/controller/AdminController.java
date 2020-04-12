@@ -6,6 +6,8 @@ import com.spring.eeg.mbg.model.ClassTable;
 import com.spring.eeg.mbg.model.Plan;
 import com.spring.eeg.mbg.model.Userlogin;
 import com.spring.eeg.service.PlanService;
+import com.spring.eeg.service.SocialService;
+import com.spring.eeg.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -23,6 +25,8 @@ public class AdminController {
     AdminService adminService;
     @Autowired
     PlanService planService;
+    @Autowired
+    UserService userService;
     @RequestMapping(value = "/admin/index")
     public String adminIndex(){
         return "adminIndex.html";
@@ -36,7 +40,13 @@ public class AdminController {
         return "newClass.html";
     }
     @RequestMapping(value = "/admin/addStudent")
-    public String addStudent(){
+    public String addStudent(Map<String,Object>map){
+        User user =userService.getCurrentUser();
+        if(user == null){
+            return "/error403";
+        }
+        List<ClassTable> list = adminService.getClassTables(user.getUserid());
+        map.put("classTables",list);
         return "addStudent.html";
     }
     @RequestMapping(value = "/admin/submitNewClass")
@@ -44,14 +54,20 @@ public class AdminController {
     public String submitNewClass(@RequestParam(value = "className")String className){
         System.out.println(className);
 //
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user =userService.getCurrentUser();
+        if(user == null){
+            return null;
+        }
         adminService.addClass(user.getUserid(),className,user.getUsername());
         return "success";
     }
     @RequestMapping(value = "/admin/getClassList")
     @ResponseBody
     public List<ClassTable> getClassList(){
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user =userService.getCurrentUser();
+        if(user == null){
+            return null;
+        }
         return adminService.classList(user.getUserid());
     }
     @RequestMapping(value = "/admin/class/{classId}")
@@ -63,7 +79,16 @@ public class AdminController {
     @RequestMapping(value = "/admin/student/{studentId}")
     public String getStudentById(@PathVariable(value = "studentId")Integer studentId, Map<String,Object> map){
         List<Plan> plans = planService.getPlans(studentId);
+        Userlogin userLogin = userService.getUser(studentId);
         map.put("plans",plans);
+        map.put("userInfo",userLogin);
+
         return "adminStudent.html";
     }
+    @RequestMapping(value = "/admin/addStudentToClass")
+    public String addStudentToClass(@RequestParam(value = "studentId")Integer studentId, Map<String,Object> map){
+
+        return "adminStudent.html";
+    }
+
 }

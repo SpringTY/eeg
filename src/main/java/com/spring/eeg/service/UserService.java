@@ -1,11 +1,13 @@
 package com.spring.eeg.service;
 
 import com.spring.eeg.Dao.UserLoginDao;
+import com.spring.eeg.Model.User;
 import com.spring.eeg.mbg.dao.UserloginMapper;
 import com.spring.eeg.mbg.model.Userlogin;
 import com.spring.eeg.mbg.model.UserloginExample;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import sun.rmi.runtime.Log;
@@ -22,6 +24,11 @@ public class UserService {
     EEGStatisticService EEGStatisticService;
     @Autowired
     UserloginMapper userloginMapper;
+
+    public  Userlogin getUser(Integer userId) {
+        return userloginMapper.selectByPrimaryKey(userId);
+    }
+
     public void registerNormalUser(Userlogin userlogin) {
         userlogin.setUserrole("user");
         String password = userlogin.getUserpassword();
@@ -37,7 +44,15 @@ public class UserService {
         // 初始状态存入数据库
         EEGStatisticService.initLastWeekState(userid);
     }
-
+    public User getCurrentUser(){
+        User user = null;
+        try {
+            user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        }catch (Exception e){
+            return null;
+        }
+        return  user;
+    }
     public List<Userlogin> getUserByPhoneAndName(String userName, String userPhone) {
         UserloginExample userloginExample = new UserloginExample();
         UserloginExample.Criteria criteria = userloginExample.createCriteria();

@@ -38,7 +38,10 @@ public class SocialController {
         log.info(title);
         log.info(authority);
         log.info(contents);
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user =userService.getCurrentUser();
+        if(user == null){
+            return "/error403";
+        }
         socialService.insertArticle(title, contents, authority, user.getUserid());
         return "redirect:/index";
     }
@@ -53,7 +56,10 @@ public class SocialController {
         log.info(title);
         log.info(authority);
         log.info(contents);
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user =userService.getCurrentUser();
+        if(user == null){
+            return null;
+        }
         socialService.updateArticle(title, contents, authority, user.getUserid(), articleId);
         return "ok";
     }
@@ -61,7 +67,10 @@ public class SocialController {
     @RequestMapping(value = "/getArticleList", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public List<Articleview> getArticleList() {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user =userService.getCurrentUser();
+        if(user == null){
+            return null;
+        }
         List<Articleview> articleViews = socialService.getArticleViews(user.getUserid());
         log.info(articleViews.toString());
         return articleViews;
@@ -104,15 +113,20 @@ public class SocialController {
     public Boolean applyFriends(@RequestParam("userPhone") String userPhone,
                                 @RequestParam("reason") String massage) {
         log.info(userPhone);
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
+        User user =userService.getCurrentUser();
+        if(user == null){
+            return null;
+        }
         Boolean result = socialService.addFriendApplication(user, userPhone, massage);
         return result;
     }
 
     @RequestMapping(value = "/ApplicationList")
     public String ApplicationList(Map<String, Object> map) {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user =userService.getCurrentUser();
+        if(user == null){
+            return "/error403";
+        }
         List<UserApplication> fromTos = socialService.getUserFromByUserTo(user);
         map.put("friends", fromTos);
         return "FriendsApplication.html";
@@ -121,7 +135,10 @@ public class SocialController {
     @RequestMapping(value = "/ApproveFriendApply")
     @ResponseBody
     public String approveFriendApply(@RequestParam("userPhone") String userPhone) {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user =userService.getCurrentUser();
+        if(user == null){
+            return null;
+        }
         socialService.approveFriendApply(user.getUserid(), userPhone);
 
         return "FriendsApplication.html";
@@ -130,7 +147,10 @@ public class SocialController {
     @RequestMapping(value = "/RejectFriendApply")
     @ResponseBody
     public String rejectFriendApply(@RequestParam("userPhone") String userPhone) {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user =userService.getCurrentUser();
+        if(user == null){
+            return null;
+        }
         socialService.rejectFriendApply(user.getUserid(), userPhone);
 
         return "FriendsApplication.html";
@@ -145,7 +165,10 @@ public class SocialController {
     @RequestMapping(value = "/socialArticles")
     @ResponseBody
     public List<ArticleJsonDisplay> getArticles() {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user =userService.getCurrentUser();
+        if(user == null){
+            return null;
+        }
         return socialService.getSocialArticles(user.getUserid());
     }
 

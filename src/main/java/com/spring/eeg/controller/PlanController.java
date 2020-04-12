@@ -7,6 +7,7 @@ import com.spring.eeg.mbg.model.Plan;
 import com.spring.eeg.mbg.model.Planstat;
 import com.spring.eeg.mbg.model.Planstatplus;
 import com.spring.eeg.service.PlanService;
+import com.spring.eeg.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,6 +21,8 @@ import java.util.List;
 public class PlanController {
     @Autowired
     PlanService planService;
+    @Autowired
+    UserService userService;
     @RequestMapping(value = "/planList")
     public String planList(){
 
@@ -35,18 +38,18 @@ public class PlanController {
         log.debug(description);
         log.debug(attentionTime.toString());
         log.debug(important);
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        attentionTime = attentionTime * 60;
+        User user =userService.getCurrentUser();
+        if(user == null){
+            return null;
+        }attentionTime = attentionTime * 60;
         planService.createNewPlan(planTitle,description,attentionTime,important,user);
         return "success";
     }
     @RequestMapping(value = "/getPlans")
     @ResponseBody
     public List<Plan> getPlans(){
-        User user = null;
-        try {
-            user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        }catch (Exception e){
+        User user =userService.getCurrentUser();
+        if(user == null){
             return null;
         }
         return planService.getPlans(user);
@@ -54,10 +57,8 @@ public class PlanController {
     @RequestMapping(value = "/finishPlan/{planId}")
     @ResponseBody
     public boolean finishPlan(@PathVariable("planId") Integer planId){
-        User user = null;
-        try {
-            user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        }catch (Exception e){
+        User user =userService.getCurrentUser();
+        if(user == null){
             return false;
         }
         return planService.finishPlan(user,planId);
@@ -65,10 +66,8 @@ public class PlanController {
     @RequestMapping(value = "/unFinishPlan/{planId}")
     @ResponseBody
     public boolean unFinishPlan(@PathVariable("planId") Integer planId){
-        User user = null;
-        try {
-            user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        }catch (Exception e){
+        User user =userService.getCurrentUser();
+        if(user == null){
             return false;
         }
         return planService.unFinishPlan(user,planId);
@@ -76,10 +75,8 @@ public class PlanController {
     @RequestMapping(value = "/importantPlan/{planId}")
     @ResponseBody
     public boolean importantPlan(@PathVariable("planId") Integer planId){
-        User user = null;
-        try {
-            user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        }catch (Exception e){
+        User user =userService.getCurrentUser();
+        if(user == null){
             return false;
         }
         return planService.importantPlan(user,planId);
@@ -87,10 +84,8 @@ public class PlanController {
     @RequestMapping(value = "/unimportantPlan/{planId}")
     @ResponseBody
     public boolean unimportantPlan(@PathVariable("planId") Integer planId){
-        User user = null;
-        try {
-            user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        }catch (Exception e){
+        User user =userService.getCurrentUser();
+        if(user == null){
             return false;
         }
         return planService.unimportantPlan(user,planId);
@@ -98,10 +93,8 @@ public class PlanController {
     @RequestMapping(value = "/revivePlan/{planId}")
     @ResponseBody
     public boolean revivePlan(@PathVariable("planId") Integer planId){
-        User user = null;
-        try {
-            user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        }catch (Exception e){
+        User user =userService.getCurrentUser();
+        if(user == null){
             return false;
         }
         return planService.revivePlan(user,planId);
@@ -109,10 +102,8 @@ public class PlanController {
     @RequestMapping(value = "/trashPlan/{planId}")
     @ResponseBody
     public boolean trashPlan(@PathVariable("planId") Integer planId){
-        User user = null;
-        try {
-            user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        }catch (Exception e){
+        User user =userService.getCurrentUser();
+        if(user == null){
             return false;
         }
         return planService.trashPlan(user,planId);
@@ -120,10 +111,8 @@ public class PlanController {
     @RequestMapping(value = "/deletePlanPermanently/{planId}")
     @ResponseBody
     public boolean deletePlanPermanently(@PathVariable("planId") Integer planId){
-        User user = null;
-        try {
-            user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        }catch (Exception e){
+        User user =userService.getCurrentUser();
+        if(user == null){
             return false;
         }
         return planService.deletePlanPermanently(user,planId);
@@ -131,22 +120,18 @@ public class PlanController {
     @RequestMapping(value = "/getLastWeekStatistic")
     @ResponseBody
     public Planstat getLastWeekStatistic(){
-        User user = null;
-        try {
-            user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        }catch (Exception e){
-
+        User user =userService.getCurrentUser();
+        if(user == null){
+            return null;
         }
         return planService.getLastWeekStatistic(user.getUserid());
     }
     @RequestMapping(value = "/getRecentPlans")
     @ResponseBody
     public List<Plan> getRecentPlans(){
-        User user = null;
-        try {
-            user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        }catch (Exception e){
-
+        User user =userService.getCurrentUser();
+        if(user == null){
+            return null;
         }
         return planService.getRecentPlans(user.getUserid());
     }
@@ -154,15 +139,18 @@ public class PlanController {
     @RequestMapping(value = "/getFriendsPlanRank")
     @ResponseBody
     public List<Planstatplus> getFriendsPlanRank(){
-        User user = null;
-        user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return planService.getFriendsPlanRank(user.getUserid());
+        User user =userService.getCurrentUser();
+        if(user == null){
+            return null;
+        } return planService.getFriendsPlanRank(user.getUserid());
     }
     @RequestMapping(value = "/getFriendsWeekRank")
     @ResponseBody
     public List<Lastweekview> getFriendsWeekRank(){
-        User user = null;
-        user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user =userService.getCurrentUser();
+        if(user == null){
+            return null;
+        }
         return planService.getFriendsWeekRank(user.getUserid());
     }
 }

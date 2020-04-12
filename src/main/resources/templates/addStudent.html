@@ -9,22 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <title>阅读专注度分析 </title>
     <!--js and css-->
-    <link href="../../assets/css/loader.css" rel="stylesheet" type="text/css"/>
-    <script src="../../assets/js/loader.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
-    <link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../../assets/css/plugins.css" rel="stylesheet" type="text/css"/>
-    <link href="../../plugins/apex/apexcharts.css" rel="stylesheet" type="text/css">
-    <link href="../../assets/css/dashboard/dash_1.css" rel="stylesheet" type="text/css"/>
-    <script src="../../plugins/apex/apexcharts.min.js"></script>
-    <script src="../../assets/js/libs/jquery-3.1.1.min.js"></script>
-    <script src="../../bootstrap/js/popper.min.js"></script>
-    <script src="../../bootstrap/js/bootstrap.min.js"></script>
-    <script src="../../plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <script src="../../assets/js/app.js"></script>
-    <script src="../../assets/js/custom.js"></script>
-    <script src="../../assets/js/dashboard/dash_1.js"></script>
-    <script src='../../assets/js/libs/axios.min.js'></script>
+    <div th:replace="common/cssAndJavascript :: staticResouces"></div>
 </head>
 <!-- BEGIN PAGE LEVEL STYLES -->
 <link rel="stylesheet" type="text/css" href="plugins/table/datatable/datatables.css">
@@ -92,7 +77,6 @@
     <div class="overlay"></div>
     <div class="search-overlay"></div>
     <div class="sidebar-wrapper sidebar-theme">
-        <!--菜单-->
         <nav id="sidebar">
             <div class="shadow-bottom"></div>
             <ul class="list-unstyled menu-categories" id="accordionExample">
@@ -147,39 +131,20 @@
 
     <!--  内容区域  -->
     <div id="content" class="main-content">
-        <div class="layout-px-spacing">
-            <div class="row layout-top-spacing">
-                <div class="col-12" id="userInfo">
-                    <h5>班级： 用户： </h5>
+        <div class="row layout-px-spacing layout-top-spacing" id="input_condition">
+            <form action="/admin/addStudentToClass" method="post">
+                <div class="form-group mb-4">
+                    <label for="classId">班级</label>
+                    <select  class="form-control" name="className" id="classId" >
+
+                    </select>
                 </div>
-                <div class="col-12">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th><div class="th-content">计划id</div></th>
-                            <th><div class="th-content">计划名</div></th>
-                            <th><div class="th-content">开始时间</div></th>
-                            <th><div class="th-content th-heading">计划专注时长(h)</div></th>
-                            <th><div class="th-content th-heading">已经专注时长(h)</div></th>
-                            <th><div class="th-content th-heading">完成度百分比</div></th>
-                            <th><div class="th-content th-heading">进度条</div></th>
-                            <th><div class="th-content th-heading">是否完成</div></th>
-                            <th><div class="no-content"></div></th>
-                        </tr>
-                        </thead>
-                        <div>
-
-
-                            <tbody id="planList">
-
-
-                            </tbody>
-                        </div>
-                    </table>
-                </div></div>
-            </div>
-
+                <div class="form-group mb-4">
+                    <label for="userPhone">学生手机号</label>
+                    <input type="text" class="form-control" name="userPhone" id="userPhone" placeholder="学生手机号">
+                </div>
+                <button class="btn btn-primary" type="submit">添加</button>
+            </form>
         </div>
         <div class="footer-wrapper">
             <div class="footer-section f-section-1">
@@ -204,47 +169,18 @@
 <!--<script src="../assets/js/config.js"></script>-->
 <div th:replace="common/cssAndJavascript :: jsCode"></div>
 
-<script type="text/javascript" th:inline="javascript">
-    let userInfo =[[${userInfo}]]
-    let userInfoHtml = ' <h5>用户： '+userInfo['username']+'</h5>'
-    $('#userInfo').html(userInfoHtml)
-    let plans = [[${plans}]]
-    let html = ''
-    let progress
-    let plan = null
-    let realtime
-    let plantime
-    for (let i = 0; i < plans.length; i++) {
-        plan = plans[i]
-        progress = plan['realtime']/plan['plantime']
-        progress = Math.ceil(progress*100)
-        realtime = plan['realtime'] /60
-        realtime = realtime.toFixed(2)
+<script src="../plugins/table/datatable/datatables.js"></script>
+<script th:inline="javascript">
 
-        plantime = plan['plantime'] /60
-        plantime = plantime.toFixed(2)
-        if(progress > 100) progress = 100
-        let last = ''
-        if(progress == 100){
-            last = '<td><div class="td-content"><span class="badge outline-badge-success">完成</span></div></td>'
-        }else{
-            last = '<td><div class="td-content"><span class="badge outline-badge-primary">进行中</span></div></td>'
-        }
-        html = html+'<tr>\n' +
-            '                                <td><div class="td-content product-brand">'+plan['planid']+'</div></td>\n' +
-            '                                <td><div class="td-content product-brand">'+plan['planname']+'</div></td>\n' +
-            '                                <td><div class="td-content">'+plan['plandate'].substring(0,10)+'</div></td>\n' +
-            '                                <td><div class="td-content">'+plantime+'</div></td>\n' +
-            '                                <td><div class="td-content">'+realtime+'</div></td>\n' +
-            '                                <td><div class="td-content">'+progress+'%</div></td>\n' +
+    let classTables = [[${classTables}]]
+    let htmlInfo = ''
+    let classTable
+    for (let i = 0; i < classTables.length; i++) {
+        classTable = classTables[i]
 
-            '<td class="sorting_1">\n' +
-            '                                                <div class="progress br-30">\n' +
-            '                                                    <div class="progress-bar br-30 bg-primary" role="progressbar" style="width: '+(progress)+'%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>\n' +
-            '                                                </div>\n' +
-            '                                            </td>'+ last+'                            </tr>'
+        htmlInfo = htmlInfo +'<option value="'+classTable['classId']+'">'+classTable['className']+'</option>+\n'
     }
-    $('#planList').html(html)
+    $('#classId').html(htmlInfo)
 </script>
 </body>
 </html>
